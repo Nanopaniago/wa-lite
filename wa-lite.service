@@ -1,0 +1,18 @@
+[Unit]
+Description=WA Lite (WhatsApp leve + n8n)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=dietpi
+WorkingDirectory=/home/dietpi/wa-lite
+ExecStart=/usr/bin/node --env-file=.env --max-old-space-size=128 --max-semi-space-size=2 server.js
+Restart=always
+RestartSec=5
+# Limites para não afetar outros serviços do DietPi
+MemoryMax=256M
+Nice=5
+
+[Install]
+WantedBy=multi-user.target

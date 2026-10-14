@@ -1,0 +1,19 @@
+{
+  "name": "wa-lite",
+  "version": "2.0.0",
+  "description": "WhatsApp Web leve com QR code, UI minimalista e integração com n8n",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node --env-file=.env --max-old-space-size=128 --max-semi-space-size=2 server.js"
+  },
+  "engines": {
+    "node": ">=20.6"
+  },
+  "dependencies": {
+    "@whiskeysockets/baileys": "^6.7.18",
+    "express": "^4.21.0",
+    "pino": "^9.0.0",
+    "qrcode": "^1.5.4"
+  }
+}
