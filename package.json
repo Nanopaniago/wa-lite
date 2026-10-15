@@ -1,6 +1,6 @@
 {
   "name": "wa-lite",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "WhatsApp Web leve com QR code, UI minimalista e integração com n8n",
   "type": "module",
   "main": "server.js",

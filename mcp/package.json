@@ -1,6 +1,6 @@
 {
   "name": "wa-lite-mcp",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Servidor MCP que liga o Claude ao WA Lite e ajuda a criar fluxos n8n",
   "type": "module",
   "main": "server.js",

@@ -48,7 +48,8 @@ Reinicie o Claude depois de guardar.
 ## Ferramentas
 | Ferramenta | O que faz |
 |---|---|
-| `wa_status` | Estado da ligação, número, memória |
+| `wa_list_sessions` | Lista os clientes (números) e o estado de cada um |
+| `wa_status` | Estado do servidor e memória |
 | `wa_list_chats` | Lista e pesquisa conversas |
 | `wa_get_messages` | Lê as últimas mensagens (por nome, número ou jid) |
 | `wa_send_text` | Envia texto |
@@ -60,8 +61,10 @@ Reinicie o Claude depois de guardar.
 
 As mensagens enviadas por `wa_send_text` e `wa_send_media` são reais. O Claude deve pedir confirmação antes de as enviar.
 
+Todas as ferramentas `wa_*` aceitam `session` (id ou nome do cliente). Sem ele, usam o primeiro cliente. Os fluxos e nós gerados respondem sempre pelo mesmo cliente que recebeu a mensagem.
+
 ## Exemplos de pedidos
-- "Vê se o WhatsApp está conectado e mostra as últimas conversas."
+- "Que clientes estão ligados? Mostra as últimas conversas da BR4 Viagens."
 - "Cria um fluxo n8n que responde por palavra-chave a perguntas sobre milhas."
 - "Lê as últimas mensagens da Marta e resume o que ela pediu."
 

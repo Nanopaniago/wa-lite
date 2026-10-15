@@ -3,315 +3,377 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="color-scheme" content="dark light">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#030806">
 <title>WA Lite</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: ecrã de entrada em duas colunas (marca monumental | painel QR); app em três zonas (barra de topo, lista, conversa) com gaveta n8n. */
+/* Layout: painéis de vidro flutuantes sobre fundo escuro com brilho esmeralda.
+   Desktop: [barra de clientes | conversas | conversa]. Telemóvel: barra + uma coluna de cada vez. */
 :root{
-  --bg:#0b100e; --s1:#121a17; --s2:#18221e; --s3:#202c27; --line:#25332d;
-  --fg:#eaf0ec; --mut:#8a9c94; --dim:#5d6f67;
-  --accent:#e4a83c; --accent-ink:#1a1204; --accent-soft:rgba(228,168,60,.14);
-  --out:#2a2416; --out-line:#4a3c1d; --in:#18221e;
-  --ok:#3fd18f; --warn:#e4a83c; --bad:#ff6b5e;
-  --display:'Big Shoulders Display',Impact,'Arial Narrow',sans-serif;
-  --sans:'Figtree',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --bg:#030806; --bg-2:#07110d;
+  --glass:rgba(255,255,255,.035); --glass-2:rgba(255,255,255,.06); --glass-3:rgba(255,255,255,.1);
+  --stroke:rgba(255,255,255,.07); --stroke-2:rgba(255,255,255,.13);
+  --fg:#ecf7f0; --mut:#8fa89b; --dim:#5b7266;
+  --em:#2edc85; --em-2:#0ce25e; --mint:#9fe2bf; --ink:#03130b;
+  --em-glow:rgba(46,220,133,.38); --em-soft:rgba(46,220,133,.12); --em-line:rgba(46,220,133,.28);
+  --bad:#ff6b6b; --warn:#f2c14e;
+  --r-xl:26px; --r-lg:20px; --r-md:14px; --r-sm:10px;
+  --sans:'Manrope',system-ui,-apple-system,'Segoe UI',sans-serif;
   --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;
   color-scheme:dark;
 }
-@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){
-  --bg:#e9eeeb; --s1:#f7f9f8; --s2:#eef2f0; --s3:#e2e8e5; --line:#cfd8d4;
-  --fg:#101814; --mut:#55665e; --dim:#7d8d86;
-  --accent:#a8670a; --accent-ink:#ffffff; --accent-soft:rgba(168,103,10,.12);
-  --out:#f6e7c9; --out-line:#e6cf9f; --in:#ffffff;
-  --ok:#14874f; --warn:#a8670a; --bad:#c62d22; color-scheme:light}}
-:root[data-theme="light"]{
-  --bg:#e9eeeb; --s1:#f7f9f8; --s2:#eef2f0; --s3:#e2e8e5; --line:#cfd8d4;
-  --fg:#101814; --mut:#55665e; --dim:#7d8d86;
-  --accent:#a8670a; --accent-ink:#ffffff; --accent-soft:rgba(168,103,10,.12);
-  --out:#f6e7c9; --out-line:#e6cf9f; --in:#ffffff;
-  --ok:#14874f; --warn:#a8670a; --bad:#c62d22; color-scheme:light}
-
 *{box-sizing:border-box}
 html,body{height:100%;margin:0}
-body{background:var(--bg);color:var(--fg);font:15px/1.45 var(--sans);overflow:hidden;
+body{color:var(--fg);font:14.5px/1.5 var(--sans);overflow:hidden;-webkit-font-smoothing:antialiased;
+  background:
+    radial-gradient(900px 420px at 50% -200px,rgba(46,220,133,.22),transparent 70%),
+    radial-gradient(700px 360px at 110% 110%,rgba(12,226,94,.07),transparent 70%),
+    var(--bg);
   padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;
+  background:radial-gradient(circle at 1px 1px,rgba(255,255,255,.06) 1px,transparent 0) 0 0/24px 24px;
+  mask-image:radial-gradient(ellipse at 50% 0%,#000 0%,transparent 75%)}
 [hidden]{display:none!important}
-button,input{font:inherit;color:inherit}
-button{cursor:pointer}
-:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer;background:none;border:0;padding:0}
+:focus-visible{outline:2px solid var(--em);outline-offset:2px}
 .mono{font-family:var(--mono)}
+::-webkit-scrollbar{width:8px;height:8px}::-webkit-scrollbar-thumb{background:var(--glass-3);border-radius:8px}
 
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:4px;padding:11px 18px;
-  background:var(--accent);color:var(--accent-ink);font-weight:600;letter-spacing:.01em;transition:filter .15s,transform .15s}
-.btn:hover{filter:brightness(1.08)}
-.btn:active{transform:translateY(1px)}
-.btn.ghost{background:transparent;color:var(--fg);border:1px solid var(--line)}
-.btn.ghost:hover{background:var(--s2)}
-.btn.danger{background:var(--bad);color:#fff}
-.btn.sm{padding:7px 12px;font-size:13px}
-.input{width:100%;min-width:0;background:var(--s2);border:1px solid var(--line);border-radius:4px;padding:11px 12px;outline:none}
-.input:focus{border-color:var(--accent)}
-.eyebrow{font:500 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--mut)}
+/* ---------- primitivas ---------- */
+.card{position:relative;border-radius:var(--r-xl);border:1px solid var(--stroke);
+  background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.012));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 30px 60px -32px rgba(0,0,0,.85)}
+.card.lit{background:radial-gradient(120% 70% at 50% -10%,rgba(46,220,133,.2),transparent 60%),linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.012))}
+.bright{background:linear-gradient(135deg,#23d97c 0%,#5fe8a3 48%,#c2f6da 100%);color:var(--ink);border-color:rgba(255,255,255,.25);
+  box-shadow:0 0 0 1px rgba(255,255,255,.08) inset,0 24px 60px -24px rgba(46,220,133,.55)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;padding:10px 18px;font-weight:700;font-size:14px;
+  color:var(--ink);background:linear-gradient(180deg,#43ee9b,#1fc873);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 10px 28px -10px var(--em-glow);transition:transform .15s,filter .15s}
+.btn:hover{filter:brightness(1.07)} .btn:active{transform:translateY(1px)}
+.btn.ghost{color:var(--fg);background:var(--glass-2);box-shadow:inset 0 0 0 1px var(--stroke-2)}
+.btn.ghost:hover{background:var(--glass-3)}
+.btn.danger{color:#fff;background:linear-gradient(180deg,#ff7d7d,#e04848);box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 10px 28px -12px rgba(255,90,90,.5)}
+.btn.sm{padding:7px 13px;font-size:13px}
+.btn.icon{width:36px;height:36px;padding:0}
+.input{width:100%;min-width:0;background:rgba(0,0,0,.25);border:1px solid var(--stroke-2);border-radius:var(--r-md);padding:11px 14px;outline:none;transition:border-color .15s,box-shadow .15s}
+.input::placeholder{color:var(--dim)}
+.input:focus{border-color:var(--em-line);box-shadow:0 0 0 4px var(--em-soft)}
+.label{display:flex;flex-direction:column;gap:6px;font-size:12.5px;color:var(--mut);font-weight:600}
+.label small{font-weight:500;color:var(--dim)}
+.chip{display:inline-flex;align-items:center;gap:7px;padding:4px 10px;border-radius:999px;font:500 11.5px var(--mono);
+  background:rgba(0,0,0,.25);border:1px solid var(--stroke-2);white-space:nowrap}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--dim);flex:none}
+[data-st="connected"] .dot,.dot.connected{background:var(--em);box-shadow:0 0 10px var(--em)}
+[data-st="qr"] .dot,[data-st="starting"] .dot,[data-st="reconnecting"] .dot,.dot.qr,.dot.starting,.dot.reconnecting{background:var(--warn);box-shadow:0 0 8px var(--warn)}
+.eyebrow{font:600 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--mut)}
+.title{font-weight:800;letter-spacing:-.025em;line-height:1.05;margin:0;text-wrap:balance}
+.muted{color:var(--mut)}
 
-/* ---------- Entrada ---------- */
-#gate{height:100%;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);overflow:auto}
-.brand{position:relative;padding:clamp(28px,6vw,72px);display:flex;flex-direction:column;justify-content:space-between;gap:40px;
-  border-right:1px solid var(--line);overflow:hidden;min-width:0}
-.brand::after{content:"";position:absolute;inset:0;pointer-events:none;
-  background:repeating-linear-gradient(0deg,transparent 0 47px,var(--line) 47px 48px);opacity:.35;mask-image:linear-gradient(90deg,#000,transparent 85%)}
-.mark{position:relative;z-index:1;font:900 clamp(84px,15vw,210px)/.82 var(--display);letter-spacing:-.01em;text-transform:uppercase;margin:0}
-.mark span{color:var(--accent)}
-.tagline{position:relative;z-index:1;max-width:30ch;font-size:clamp(17px,1.6vw,21px);color:var(--mut);margin:18px 0 0;text-wrap:balance}
-.specs{position:relative;z-index:1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin:0;padding:0;list-style:none;max-width:560px}
-.specs li{background:var(--bg);padding:14px 16px;display:flex;flex-direction:column;gap:4px;min-width:0}
-.specs b{font:700 22px/1 var(--display);letter-spacing:.02em;text-transform:uppercase}
-.specs span{font-size:12px;color:var(--mut)}
+/* ---------- entrada ---------- */
+#gate{height:100%;display:grid;place-items:center;padding:24px max(16px,env(safe-area-inset-left,0px))}
+.login{width:100%;max-width:420px;padding:34px;display:flex;flex-direction:column;gap:18px}
+.logo{display:flex;align-items:center;gap:12px}
+.mark{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;font:800 19px var(--sans);color:var(--ink);
+  background:linear-gradient(135deg,#43ee9b,#1bbf6c);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 30px -4px var(--em-glow)}
+.logo b{font-size:20px;font-weight:800;letter-spacing:-.02em}
+.login h1{font-size:38px}
+.login h1 span{background:linear-gradient(90deg,var(--em),var(--mint));-webkit-background-clip:text;background-clip:text;color:transparent}
+.err{color:var(--bad);font-size:13px;min-height:1em;margin:0}
 
-.dock{display:flex;align-items:center;justify-content:center;padding:clamp(24px,5vw,64px);min-width:0}
-.panel{width:100%;max-width:400px;display:flex;flex-direction:column;gap:18px}
-.panel h2{font:700 34px/1 var(--display);text-transform:uppercase;letter-spacing:.01em;margin:0}
-.panel p{margin:0;color:var(--mut)}
-.qrframe{position:relative;align-self:flex-start;padding:16px;background:#fff;line-height:0;max-width:100%}
-.qrframe img{width:288px;max-width:100%;height:auto;aspect-ratio:1;display:block}
-.qrframe::before,.qrframe::after{content:"";position:absolute;width:26px;height:26px;border:3px solid var(--accent)}
-.qrframe::before{top:-9px;left:-9px;border-right:0;border-bottom:0}
-.qrframe::after{bottom:-9px;right:-9px;border-left:0;border-top:0}
-.qrbar{height:3px;background:var(--s3);overflow:hidden;width:320px;max-width:100%}
-.qrbar i{display:block;height:100%;background:var(--accent);width:100%;transform-origin:left}
-.steps{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px;counter-reset:s}
-.steps li{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:baseline;color:var(--mut);counter-increment:s}
-.steps li::before{content:counter(s,decimal-leading-zero);font:500 12px var(--mono);color:var(--accent)}
-.steps b{color:var(--fg);font-weight:600}
-.spinner{width:44px;height:44px;border:3px solid var(--s3);border-top-color:var(--accent);border-radius:50%;animation:spin 1s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.err{color:var(--bad);font-size:13px;min-height:1em}
+/* ---------- app ---------- */
+#app{height:100%;display:grid;grid-template-columns:76px 340px minmax(0,1fr);gap:12px;
+  padding:max(12px,env(safe-area-inset-top,0px)) 12px max(12px,env(safe-area-inset-bottom,0px))}
+.rail{display:flex;flex-direction:column;align-items:center;gap:10px;padding:14px 0;min-height:0}
+.rail .mark{width:44px;height:44px;margin-bottom:6px}
+#clients{display:flex;flex-direction:column;gap:10px;align-items:center;overflow-y:auto;overflow-x:hidden;padding:8px 10px;min-height:0;width:100%}
+.cl{position:relative;width:48px;height:48px;border-radius:15px;display:grid;place-items:center;font-weight:800;font-size:15px;letter-spacing:-.02em;
+  background:var(--glass-2);box-shadow:inset 0 0 0 1px var(--stroke-2);transition:transform .15s,box-shadow .15s}
+.cl:hover{transform:translateY(-1px)}
+.cl.on{color:var(--ink);background:linear-gradient(135deg,#43ee9b,#1bbf6c);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 26px -4px var(--em-glow)}
+.cl .dot{position:absolute;right:-2px;bottom:-2px;width:11px;height:11px;border:2px solid var(--bg)}
+.cl .n{position:absolute;top:-5px;right:-7px;min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--fg);color:var(--ink);font:700 10.5px/18px var(--mono)}
+.cl.add{background:transparent;box-shadow:inset 0 0 0 1.5px var(--stroke-2);color:var(--mut);font-size:22px;font-weight:500;border-radius:15px}
+.cl.add:hover{color:var(--em);box-shadow:inset 0 0 0 1.5px var(--em-line)}
+.rail .sp{flex:1}
+.rbtn{width:44px;height:36px;border-radius:12px;color:var(--mut);font:600 11.5px var(--mono)}
+.rbtn:hover{background:var(--glass-2);color:var(--fg)}
 
-/* ---------- App ---------- */
-#app{height:100%;display:grid;grid-template-rows:auto minmax(0,1fr);
-  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-.top{display:flex;align-items:center;gap:16px;padding:10px 16px;border-bottom:1px solid var(--line);background:var(--s1);min-width:0}
-.top .wm{font:900 26px/1 var(--display);text-transform:uppercase;letter-spacing:.01em;white-space:nowrap}
-.top .wm span{color:var(--accent)}
-.pill{display:inline-flex;align-items:center;gap:8px;padding:5px 10px;border:1px solid var(--line);border-radius:999px;font:500 12px var(--mono);white-space:nowrap}
-.dot{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 0 var(--ok);animation:pulse 2.4s infinite}
-.pill.off .dot{background:var(--bad);animation:none}
-@keyframes pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--ok) 60%,transparent)}70%{box-shadow:0 0 0 8px transparent}100%{box-shadow:0 0 0 0 transparent}}
-.top .meta{color:var(--mut);font:12px var(--mono);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
-.top .sp{flex:1}
-.top .acts{display:flex;gap:8px}
-
-.body{display:grid;grid-template-columns:340px minmax(0,1fr);min-height:0;position:relative}
-.list{display:flex;flex-direction:column;min-height:0;border-right:1px solid var(--line);background:var(--s1)}
-.tools{padding:12px;display:flex;flex-direction:column;gap:8px;border-bottom:1px solid var(--line)}
+.side{display:flex;flex-direction:column;min-height:0;overflow:hidden}
+.client{margin:10px;padding:16px;border-radius:var(--r-lg);display:flex;flex-direction:column;gap:12px}
+.client .row{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.client h2{font-size:22px}
+.client .num{font:500 12.5px var(--mono);opacity:.72}
+.client .chip{background:rgba(3,19,11,.14);border-color:rgba(3,19,11,.18);color:var(--ink)}
+.client .chip .dot{background:var(--ink);box-shadow:none}
+.client .btn.icon{color:var(--ink);background:rgba(3,19,11,.12);box-shadow:inset 0 0 0 1px rgba(3,19,11,.15)}
+.client.off{background:var(--glass-2);color:var(--fg);border:1px solid var(--stroke-2);box-shadow:none}
+.client.off .chip{background:rgba(0,0,0,.25);border-color:var(--stroke-2);color:var(--fg)}
+.client.off .chip .dot{background:var(--warn)}
+.client.off .btn.icon{color:var(--fg);background:var(--glass-2);box-shadow:inset 0 0 0 1px var(--stroke-2)}
+.tools{display:flex;flex-direction:column;gap:8px;padding:0 10px 10px}
 .newchat{display:flex;gap:8px}
-.newchat .input{padding:8px 10px;font-size:14px}
-#chats{flex:1;overflow:auto;min-height:0}
-.chat{width:100%;display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:12px;align-items:center;text-align:left;
-  padding:11px 14px;background:none;border:0;border-bottom:1px solid var(--line);position:relative}
-.chat:hover{background:var(--s2)}
-.chat.on{background:var(--s3)}
-.chat.on::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent)}
-.av{width:44px;height:44px;border-radius:6px;display:grid;place-items:center;font:700 18px var(--display);letter-spacing:.02em;color:#fff;flex:none}
-.chat .nm{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.newchat .input{padding:9px 12px;font-size:13.5px}
+#chats{flex:1;overflow:auto;min-height:0;padding:0 6px 8px}
+.chat{width:100%;display:grid;grid-template-columns:42px minmax(0,1fr) auto;gap:12px;align-items:center;text-align:left;padding:10px;border-radius:var(--r-md);transition:background .12s}
+.chat:hover{background:var(--glass)}
+.chat.on{background:var(--glass-2);box-shadow:inset 0 0 0 1px var(--stroke-2)}
+.av{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;font-weight:800;font-size:14px;flex:none;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+.chat .nm{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .chat .ls{color:var(--mut);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .chat .rt{display:flex;flex-direction:column;align-items:flex-end;gap:5px}
 .chat time{font:11px var(--mono);color:var(--dim)}
-.chat.unread time{color:var(--accent)}
-.badge{min-width:20px;height:20px;padding:0 6px;border-radius:10px;background:var(--accent);color:var(--accent-ink);font:600 11px/20px var(--mono);text-align:center}
-.listempty{padding:28px 18px;color:var(--mut);font-size:14px}
+.chat.unread time{color:var(--em)}
+.badge{min-width:20px;height:20px;padding:0 6px;border-radius:10px;background:var(--em);color:var(--ink);font:700 11px/20px var(--mono);text-align:center;box-shadow:0 0 14px -2px var(--em-glow)}
+.empty{padding:26px 16px;color:var(--mut);font-size:13.5px;text-align:center}
 
-.conv{display:flex;flex-direction:column;min-width:0;min-height:0}
-.chead{display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid var(--line);background:var(--s1);min-height:65px}
-.chead .av{width:40px;height:40px;font-size:16px}
-.chead .t{min-width:0}
-.chead b{display:block;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.conv{display:flex;flex-direction:column;min-width:0;min-height:0;overflow:hidden}
+.chead{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid var(--stroke);min-height:70px}
+.chead .t{min-width:0;flex:1}
+.chead b{display:block;font-size:16px;font-weight:800;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .chead small{font:12px var(--mono);color:var(--mut)}
-#back{display:none}
-#msgs{flex:1;overflow:auto;min-height:0;padding:20px clamp(14px,4vw,48px);display:flex;flex-direction:column;gap:4px;
-  background:radial-gradient(circle at 1px 1px,var(--line) 1px,transparent 0) 0 0/22px 22px,var(--bg)}
-.day{align-self:center;margin:12px 0 6px;padding:3px 10px;font:500 11px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--mut);background:var(--s1);border:1px solid var(--line);border-radius:999px}
-.m{max-width:min(72%,560px);padding:7px 11px 5px;border-radius:8px 8px 8px 2px;background:var(--in);border:1px solid var(--line);white-space:pre-wrap;word-break:break-word;align-self:flex-start}
-.m.me{align-self:flex-end;border-radius:8px 8px 2px 8px;background:var(--out);border-color:var(--out-line)}
-.m .who{display:block;font-size:12px;font-weight:600;margin-bottom:1px}
-.m .tm{display:block;text-align:right;font:10px var(--mono);color:var(--mut);margin-top:2px}
+#back,#stageback{display:none}
+.stage{position:relative}
+#msgs{flex:1;overflow:auto;min-height:0;padding:22px clamp(14px,4vw,44px);display:flex;flex-direction:column;gap:5px}
+.day{align-self:center;margin:12px 0 6px}
+.m{max-width:min(72%,560px);padding:8px 12px 6px;border-radius:16px 16px 16px 6px;background:var(--glass-2);border:1px solid var(--stroke);
+  white-space:pre-wrap;word-break:break-word;align-self:flex-start}
+.m.me{align-self:flex-end;border-radius:16px 16px 6px 16px;border-color:var(--em-line);
+  background:linear-gradient(135deg,rgba(46,220,133,.24),rgba(46,220,133,.09))}
+.m .who{display:block;font-size:12px;font-weight:700;margin-bottom:1px}
+.m .tm{display:block;text-align:right;font:10.5px var(--mono);color:var(--mut);margin-top:2px}
 .m.media{font-style:italic;color:var(--mut)}
-.hero{margin:auto;text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px;max-width:340px;padding:24px}
-.hero .big{font:900 72px/.85 var(--display);text-transform:uppercase;color:var(--s3)}
-.hero .big span{color:var(--accent);opacity:.6}
-.hero p{margin:0;color:var(--mut)}
-.composer{display:flex;gap:10px;padding:12px 16px;border-top:1px solid var(--line);background:var(--s1)}
-.composer textarea{flex:1;min-width:0;resize:none;max-height:140px;background:var(--s2);border:1px solid var(--line);border-radius:4px;padding:11px 12px;font:inherit;color:inherit;outline:none}
-.composer textarea:focus{border-color:var(--accent)}
+.composer{display:flex;gap:10px;padding:12px 14px;border-top:1px solid var(--stroke)}
+.composer textarea{flex:1;min-width:0;resize:none;max-height:140px;border-radius:22px;padding:11px 16px}
 
-/* gaveta n8n */
-.drawer{position:absolute;top:0;right:0;bottom:0;width:min(440px,100%);background:var(--s1);border-left:1px solid var(--line);
-  display:flex;flex-direction:column;z-index:5;box-shadow:-24px 0 48px rgba(0,0,0,.25)}
-.drawer header{display:flex;align-items:center;justify-content:space-between;padding:16px;border-bottom:1px solid var(--line)}
-.drawer h3{margin:0;font:700 26px/1 var(--display);text-transform:uppercase}
-.drawer .in{overflow:auto;padding:16px;display:flex;flex-direction:column;gap:22px}
+/* painel central: QR, vazio, boas-vindas */
+.stage{flex:1;display:grid;place-items:center;padding:24px;min-height:0;overflow:auto}
+.panel{width:100%;max-width:440px;padding:30px;display:flex;flex-direction:column;gap:16px;text-align:left}
+.panel h3{font-size:30px}
+.qrwrap{position:relative;align-self:center;padding:14px;border-radius:24px;background:#fff;line-height:0;
+  box-shadow:0 0 0 1px rgba(255,255,255,.4),0 0 70px -6px var(--em-glow)}
+.qrwrap img{width:260px;max-width:100%;height:auto;aspect-ratio:1;border-radius:10px}
+.qrbar{height:4px;border-radius:4px;background:var(--glass-2);overflow:hidden}
+.qrbar i{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--em),var(--mint));transform-origin:left;box-shadow:0 0 12px var(--em)}
+.steps{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px;counter-reset:s}
+.steps li{display:grid;grid-template-columns:26px 1fr;gap:10px;align-items:baseline;color:var(--mut);counter-increment:s}
+.steps li::before{content:counter(s);display:grid;place-items:center;width:22px;height:22px;border-radius:50%;font:700 11px var(--mono);color:var(--em);background:var(--em-soft);box-shadow:inset 0 0 0 1px var(--em-line)}
+.steps b{color:var(--fg)}
+.spin{width:46px;height:46px;border-radius:50%;border:3px solid var(--glass-3);border-top-color:var(--em);animation:spin 1s linear infinite;box-shadow:0 0 30px -6px var(--em-glow)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hexes{display:flex;gap:10px}
+.hex{width:34px;height:38px;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);background:linear-gradient(160deg,#5ff0aa,#14a95c);box-shadow:0 0 20px var(--em-glow)}
+.hex:nth-child(2){opacity:.7;transform:translateY(10px)} .hex:nth-child(3){opacity:.45}
+
+/* gaveta e diálogos */
+.scrim{position:fixed;inset:0;background:rgba(1,6,4,.65);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:grid;place-items:center;z-index:20;padding:16px}
+.dialog{width:100%;max-width:440px;padding:26px;display:flex;flex-direction:column;gap:16px;max-height:calc(100% - 32px);overflow:auto;background:linear-gradient(180deg,#0e1b16,#08110d)}
+.dialog h4{font-size:26px}
+.dialog .row{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
+.dialog .split{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;padding-top:14px;border-top:1px solid var(--stroke)}
+.drawer{position:fixed;top:12px;right:12px;bottom:12px;width:min(460px,calc(100% - 24px));z-index:15;display:flex;flex-direction:column;background:linear-gradient(180deg,#0e1b16,#07100c)}
+.drawer header{display:flex;align-items:center;justify-content:space-between;padding:20px 20px 14px}
+.drawer h3{font-size:24px}
+.drawer .in{overflow:auto;padding:0 20px 20px;display:flex;flex-direction:column;gap:20px}
 .drawer section{display:flex;flex-direction:column;gap:8px}
-.drawer p{margin:0;color:var(--mut);font-size:14px}
-pre.code{margin:0;padding:12px;background:var(--bg);border:1px solid var(--line);border-radius:4px;font:12px/1.55 var(--mono);overflow:auto;white-space:pre}
-.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:13px}
-.kv dt{color:var(--mut)} .kv dd{margin:0;font-family:var(--mono)}
+.drawer p{margin:0;color:var(--mut);font-size:13.5px}
+pre.code{margin:0;padding:14px;border-radius:var(--r-md);background:rgba(0,0,0,.35);border:1px solid var(--stroke);font:12px/1.6 var(--mono);color:#bfeed6;overflow:auto;white-space:pre}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:13px;margin:0}
+.kv dt{color:var(--mut)} .kv dd{margin:0;font-family:var(--mono);overflow-wrap:anywhere}
+#toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:30;
+  padding:11px 18px;border-radius:999px;font-weight:600;font-size:13.5px;max-width:calc(100% - 32px);
+  color:var(--ink);background:linear-gradient(180deg,#43ee9b,#1fc873);box-shadow:0 14px 40px -10px var(--em-glow)}
 
-/* modal + toast */
-.scrim{position:fixed;inset:0;background:rgba(0,0,0,.55);display:grid;place-items:center;z-index:20;padding:16px}
-.dialog{background:var(--s1);border:1px solid var(--line);padding:22px;max-width:380px;width:100%;display:flex;flex-direction:column;gap:14px}
-.dialog h4{margin:0;font:700 26px/1 var(--display);text-transform:uppercase}
-.dialog p{margin:0;color:var(--mut)}
-.dialog .row{display:flex;gap:8px;justify-content:flex-end}
-#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:30;
-  background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:4px;font-size:14px;max-width:calc(100% - 32px)}
-
+@media (max-width:1100px){#app{grid-template-columns:72px 300px minmax(0,1fr)}}
 @media (max-width:860px){
-  body{overflow:auto}
-  #gate{grid-template-columns:minmax(0,1fr)}
-  .brand{border-right:0;border-bottom:1px solid var(--line);gap:24px}
-  .specs{grid-template-columns:minmax(0,1fr)}
-  .body{grid-template-columns:minmax(0,1fr)}
+  body{overflow:hidden}
+  #app{grid-template-columns:64px minmax(0,1fr);gap:8px;padding:max(8px,env(safe-area-inset-top,0px)) 8px max(8px,env(safe-area-inset-bottom,0px))}
+  .rail{padding:10px 0}
+  .cl{width:44px;height:44px}
   .conv{display:none}
-  .body.open .list{display:none}
-  .body.open .conv{display:flex}
-  #back{display:inline-flex}
-  .top .meta{display:none}
+  #app.open .side{display:none}
+  #app.open .conv{display:flex}
+  #back,#stageback{display:inline-flex}
   .m{max-width:88%}
+  .login{padding:26px}
 }
-@media (max-width:480px){.top .acts .lbl{display:none}}
 @media (prefers-reduced-motion:no-preference){
-  .m.new{animation:rise .22s ease-out}
-  @keyframes rise{from{opacity:.25;transform:translateY(6px)}}
-  .mark{animation:enter .7s cubic-bezier(.2,.7,.2,1) both}
-  @keyframes enter{from{letter-spacing:.08em;opacity:.3}}
+  .m.new{animation:rise .24s ease-out}
+  @keyframes rise{from{opacity:.2;transform:translateY(8px)}}
+  .qrwrap{animation:halo 3s ease-in-out infinite}
+  @keyframes halo{50%{box-shadow:0 0 0 1px rgba(255,255,255,.4),0 0 90px 0 var(--em-glow)}}
 }
-@media (prefers-reduced-motion:reduce){.dot,.spinner{animation:none}}
+@media (prefers-reduced-motion:reduce){.spin{animation-duration:3s}}
 </style>
 </head>
 <body>
 
+<!-- ============ ENTRADA ============ -->
 <section id="gate">
-  <div class="brand">
-    <div>
-      <h1 class="mark">WA<span>/</span><br>Lite</h1>
-      <p class="tagline">O seu WhatsApp a correr no seu servidor, leve e ligado ao n8n.</p>
-    </div>
-    <ul class="specs">
-      <li><b>Sem browser</b><span>WebSocket direto, sem Chromium</span></li>
-      <li><b>Webhook</b><span>Cada mensagem chega ao n8n</span></li>
-      <li><b>/api/send</b><span>O n8n responde por si</span></li>
-    </ul>
+  <form class="card lit login" id="login">
+    <div class="logo"><div class="mark">W</div><b>WA Lite</b></div>
+    <h1 class="title">Os WhatsApp dos seus clientes, <span>num só lugar.</span></h1>
+    <p class="muted" style="margin:0">Leve, no seu servidor e ligado ao n8n. Entre com o <span class="mono">API_TOKEN</span> do ficheiro <span class="mono">.env</span>.</p>
+    <input class="input mono" id="tok" type="password" placeholder="API token" autocomplete="current-password" required>
+    <p class="err" id="loginerr"></p>
+    <button class="btn" type="submit">Entrar</button>
+  </form>
+  <div class="card lit panel" id="booting" hidden>
+    <div class="spin" role="status" aria-label="A ligar"></div>
+    <span class="eyebrow" id="bootlbl">A ligar ao servidor</span>
   </div>
+</section>
 
-  <div class="dock">
-    <form class="panel" id="p-login" hidden>
-      <span class="eyebrow">Acesso</span>
-      <h2>Entrar</h2>
-      <p>Use o <span class="mono">API_TOKEN</span> definido no ficheiro <span class="mono">.env</span> do servidor.</p>
-      <input class="input mono" id="tok" type="password" placeholder="API token" autocomplete="current-password" required>
-      <div class="err" id="loginerr"></div>
-      <button class="btn" type="submit">Entrar</button>
+<!-- ============ APP ============ -->
+<section id="app" hidden>
+  <nav class="card rail" aria-label="Clientes">
+    <div class="mark" title="WA Lite">W</div>
+    <div id="clients"></div>
+    <button class="cl add" id="addclient" type="button" title="Adicionar cliente" aria-label="Adicionar cliente">+</button>
+    <span class="sp"></span>
+    <button class="rbtn" id="openn8n" type="button" title="Ligação ao n8n">n8n</button>
+    <button class="rbtn" id="signout" type="button" title="Sair desta página">Sair</button>
+  </nav>
+
+  <aside class="card side">
+    <div class="client bright" id="clientcard" hidden>
+      <div class="row">
+        <div style="min-width:0">
+          <span class="chip" id="cstatus"><i class="dot"></i><span>Conectado</span></span>
+          <h2 class="title" id="cname" style="margin-top:12px">Cliente</h2>
+          <span class="num" id="cnum"></span>
+        </div>
+        <button class="btn icon" id="editclient" type="button" title="Definições do cliente" aria-label="Definições do cliente">⋯</button>
+      </div>
+    </div>
+    <div class="tools" id="tools" hidden>
+      <input class="input" id="search" type="search" placeholder="Procurar conversa" autocomplete="off">
+      <form class="newchat" id="newchat">
+        <input class="input mono" id="nn" placeholder="Novo: 351912345678" inputmode="tel" autocomplete="off">
+        <button class="btn sm" type="submit">Abrir</button>
+      </form>
+    </div>
+    <div id="chats"></div>
+  </aside>
+
+  <main class="card conv" id="conv">
+    <div class="chead" id="chead" hidden>
+      <button class="btn ghost icon" id="back" type="button" aria-label="Voltar">←</button>
+      <div class="av" id="cav"></div>
+      <div class="t"><b id="ctitle"></b><small id="csub"></small></div>
+    </div>
+    <div id="msgs" hidden></div>
+    <form class="composer" id="composer" hidden>
+      <textarea class="input" id="txt" rows="1" placeholder="Escreva uma mensagem" aria-label="Mensagem"></textarea>
+      <button class="btn" type="submit">Enviar</button>
     </form>
 
-    <div class="panel" id="p-qr" hidden>
-      <span class="eyebrow">Ligar dispositivo</span>
-      <h2>Escaneie o código</h2>
-      <div class="qrframe"><img id="qrimg" alt="QR code para ligar o WhatsApp"></div>
-      <div class="qrbar"><i id="qrbar"></i></div>
-      <ol class="steps">
-        <li><span>Abra o <b>WhatsApp</b> no telemóvel</span></li>
-        <li><span>Toque em <b>Aparelhos conectados</b>, depois <b>Conectar um aparelho</b></span></li>
-        <li><span>Aponte a câmara para este código</span></li>
-      </ol>
+    <div class="stage" id="stage">
+      <button class="btn ghost sm" id="stageback" type="button" style="position:absolute;top:12px;left:12px">← Clientes</button>
+      <!-- sem clientes -->
+      <div class="card lit panel" id="st-welcome" hidden>
+        <div class="hexes"><i class="hex"></i><i class="hex"></i><i class="hex"></i></div>
+        <span class="eyebrow">Primeiro passo</span>
+        <h3 class="title">Adicione o primeiro cliente</h3>
+        <p class="muted" style="margin:0">Cada cliente tem o seu número de WhatsApp, as suas conversas e, se quiser, o seu próprio webhook no n8n.</p>
+        <button class="btn" id="welcomeadd" type="button">Adicionar cliente</button>
+      </div>
+      <!-- QR -->
+      <div class="card lit panel" id="st-qr" hidden>
+        <span class="eyebrow" id="qrfor">Ligar número</span>
+        <h3 class="title">Escaneie o código</h3>
+        <div class="qrwrap"><img id="qrimg" alt="QR code para ligar o WhatsApp"></div>
+        <div class="qrbar"><i id="qrbar"></i></div>
+        <ol class="steps">
+          <li><span>Abra o <b>WhatsApp</b> no telemóvel do cliente</span></li>
+          <li><span>Toque em <b>Aparelhos conectados</b> e depois <b>Conectar um aparelho</b></span></li>
+          <li><span>Aponte a câmara para este código</span></li>
+        </ol>
+      </div>
+      <!-- parado -->
+      <div class="card lit panel" id="st-idle" hidden>
+        <span class="eyebrow" id="idlefor">Cliente</span>
+        <h3 class="title">Número por ligar</h3>
+        <p class="muted" style="margin:0">Gere um código QR e escaneie-o com o WhatsApp deste cliente.</p>
+        <button class="btn" id="genqr" type="button">Gerar QR code</button>
+      </div>
+      <!-- a ligar -->
+      <div class="card lit panel" id="st-wait" hidden>
+        <div class="spin" role="status" aria-label="A ligar"></div>
+        <span class="eyebrow" id="waitlbl">A ligar</span>
+        <p class="muted" style="margin:0" id="waitmsg">O código QR aparece dentro de segundos.</p>
+      </div>
+      <!-- ligado, sem conversa aberta -->
+      <div class="panel" id="st-pick" hidden style="text-align:center;align-items:center">
+        <div class="hexes"><i class="hex"></i><i class="hex"></i><i class="hex"></i></div>
+        <p class="muted" style="margin:0">Escolha uma conversa ou abra um número novo.</p>
+      </div>
     </div>
-
-    <div class="panel" id="p-wait">
-      <div class="spinner" role="status" aria-label="A ligar"></div>
-      <span class="eyebrow" id="waitlbl">A ligar ao servidor</span>
-      <p id="waitmsg">Um momento.</p>
-    </div>
-  </div>
+  </main>
 </section>
 
-<section id="app" hidden>
-  <header class="top">
-    <div class="wm">WA<span>/</span>Lite</div>
-    <span class="pill" id="pill"><i class="dot"></i><span id="pilltxt">Conectado</span></span>
-    <span class="meta" id="meta"></span>
-    <span class="sp"></span>
-    <div class="acts">
-      <button class="btn ghost sm" id="openn8n" type="button">n8n</button>
-      <button class="btn ghost sm" id="logout" type="button"><span class="lbl">Desligar</span><span aria-hidden="true">⏻</span></button>
-    </div>
-  </header>
-
-  <div class="body" id="body">
-    <aside class="list">
-      <div class="tools">
-        <input class="input" id="search" type="search" placeholder="Procurar conversa" autocomplete="off">
-        <form class="newchat" id="newchat">
-          <input class="input mono" id="nn" placeholder="Novo: 351912345678" inputmode="tel" autocomplete="off">
-          <button class="btn sm" type="submit">Abrir</button>
-        </form>
-      </div>
-      <div id="chats"></div>
-    </aside>
-
-    <main class="conv">
-      <div class="chead" id="chead">
-        <button class="btn ghost sm" id="back" type="button" aria-label="Voltar">←</button>
-        <div class="av" id="cav" hidden></div>
-        <div class="t"><b id="ctitle">Nenhuma conversa aberta</b><small id="csub"></small></div>
-      </div>
-      <div id="msgs">
-        <div class="hero"><div class="big">WA<span>/</span>Lite</div><p>Escolha uma conversa ou abra um número novo para começar.</p></div>
-      </div>
-      <form class="composer" id="composer" hidden>
-        <textarea id="txt" rows="1" placeholder="Escreva uma mensagem" aria-label="Mensagem"></textarea>
-        <button class="btn" type="submit">Enviar</button>
-      </form>
-    </main>
-
-    <aside class="drawer" id="drawer" hidden>
-      <header><h3>Ligação n8n</h3><button class="btn ghost sm" id="closen8n" type="button">Fechar</button></header>
-      <div class="in">
-        <section>
-          <span class="eyebrow">Receber mensagens</span>
-          <p>Cada mensagem recebida é enviada por POST para o <span class="mono">N8N_WEBHOOK_URL</span>. Crie um nó Webhook no n8n com método POST. Exemplo do corpo:</p>
-<pre class="code">{
-  "event": "message",
-  "chat": "351912345678@s.whatsapp.net",
-  "chatName": "Marta Silva",
-  "from": "351912345678@s.whatsapp.net",
-  "text": "Olá!",
-  "type": "text",
-  "isGroup": false,
-  "timestamp": 1760480000
-}</pre>
-        </section>
-        <section>
-          <span class="eyebrow">Enviar a partir do n8n</span>
-          <p>Nó HTTP Request, método POST, com o header de autorização:</p>
-          <pre class="code" id="curl"></pre>
-          <button class="btn ghost sm" id="copycurl" type="button">Copiar exemplo</button>
-        </section>
-        <section>
-          <span class="eyebrow">Servidor</span>
-          <dl class="kv" id="kv"></dl>
-        </section>
-      </div>
-    </aside>
-  </div>
-</section>
-
-<div class="scrim" id="confirm" hidden>
-  <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="cft">
-    <h4 id="cft">Desligar o WhatsApp?</h4>
-    <p>A sessão é terminada e o n8n deixa de receber mensagens até escanear um novo QR.</p>
-    <div class="row"><button class="btn ghost" id="cfno" type="button">Cancelar</button><button class="btn danger" id="cfyes" type="button">Desligar</button></div>
-  </div>
+<!-- novo cliente -->
+<div class="scrim" id="dlg-add" hidden>
+  <form class="card dialog" id="addform" role="dialog" aria-modal="true" aria-labelledby="addt">
+    <span class="eyebrow">Novo cliente</span>
+    <h4 class="title" id="addt">Adicionar cliente</h4>
+    <label class="label">Nome do cliente
+      <input class="input" id="addname" maxlength="40" placeholder="Ex. BR4 Viagens" required autocomplete="off">
+    </label>
+    <label class="label">Webhook do n8n <small>Opcional. Vazio usa o N8N_WEBHOOK_URL do servidor.</small>
+      <input class="input mono" id="addhook" placeholder="http://192.168.1.81:5678/webhook/cliente" autocomplete="off" style="font-size:12.5px">
+    </label>
+    <p class="err" id="adderr"></p>
+    <div class="row"><button class="btn ghost" type="button" data-close>Cancelar</button><button class="btn" type="submit">Criar e gerar QR</button></div>
+  </form>
 </div>
+
+<!-- definições do cliente -->
+<div class="scrim" id="dlg-edit" hidden>
+  <form class="card dialog" id="editform" role="dialog" aria-modal="true" aria-labelledby="editt">
+    <span class="eyebrow">Definições</span>
+    <h4 class="title" id="editt">Cliente</h4>
+    <dl class="kv" id="editkv"></dl>
+    <label class="label">Nome
+      <input class="input" id="editname" maxlength="40" required autocomplete="off">
+    </label>
+    <label class="label">Webhook do n8n <small>Vazio usa o webhook geral do servidor.</small>
+      <input class="input mono" id="edithook" autocomplete="off" style="font-size:12.5px">
+    </label>
+    <p class="err" id="editerr"></p>
+    <div class="row"><button class="btn ghost" type="button" data-close>Fechar</button><button class="btn" type="submit">Guardar</button></div>
+    <div class="split">
+      <button class="btn ghost sm" type="button" id="unlink">Desligar WhatsApp</button>
+      <button class="btn ghost sm" type="button" id="remove" style="color:var(--bad)">Remover cliente</button>
+    </div>
+  </form>
+</div>
+
+<!-- gaveta n8n -->
+<aside class="card drawer" id="drawer" hidden>
+  <header><h3 class="title">Ligação n8n</h3><button class="btn ghost sm" id="closen8n" type="button">Fechar</button></header>
+  <div class="in">
+    <section>
+      <span class="eyebrow">Receber mensagens</span>
+      <p>Cada mensagem recebida vai por POST para o webhook do cliente (ou o geral). O campo <span class="mono">session</span> diz de que cliente veio.</p>
+      <pre class="code" id="payload"></pre>
+    </section>
+    <section>
+      <span class="eyebrow">Enviar a partir do n8n</span>
+      <p>Nó HTTP Request, método POST. Use <span class="mono">session</span> para escolher o número que envia.</p>
+      <pre class="code" id="curl"></pre>
+      <button class="btn ghost sm" id="copycurl" type="button" style="align-self:flex-start">Copiar exemplo</button>
+    </section>
+    <section>
+      <span class="eyebrow">Servidor</span>
+      <dl class="kv" id="kv"></dl>
+    </section>
+  </div>
+</aside>
+
 <div id="toast" hidden></div>
 
 <script>
@@ -319,9 +381,11 @@ pre.code{margin:0;padding:12px;background:var(--bg);border:1px solid var(--line)
   var $ = function (id) { return document.getElementById(id); };
   var store = {
     get: function () { try { return localStorage.getItem('wa_token') || ''; } catch (e) { return ''; } },
-    set: function (v) { try { v ? localStorage.setItem('wa_token', v) : localStorage.removeItem('wa_token'); } catch (e) {} }
+    set: function (v) { try { v ? localStorage.setItem('wa_token', v) : localStorage.removeItem('wa_token'); } catch (e) {} },
+    pick: function (v) { try { if (v === undefined) return localStorage.getItem('wa_client') || ''; localStorage.setItem('wa_client', v); } catch (e) { return ''; } }
   };
-  var token = store.get(), es = null, cur = null, chats = {}, me = '', qrTimer = null, filter = '';
+  var token = store.get(), es = null;
+  var S = {}, order = [], chats = {}, sid = null, jid = null, filter = '', qrTimer = null, lastQR = '';
 
   // ---------- util ----------
   function api(path, opts) {
@@ -331,111 +395,170 @@ pre.code{margin:0;padding:12px;background:var(--bg);border:1px solid var(--line)
       headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token },
       body: opts.body ? JSON.stringify(opts.body) : undefined
     }).then(function (r) {
-      if (r.status === 401) { logoutLocal('Token inválido. Entre de novo.'); throw new Error('401'); }
+      if (r.status === 401) { signout('Token inválido. Entre de novo.'); throw new Error('401'); }
       return r.json().then(function (j) { if (!r.ok) throw new Error(j.error || ('Erro ' + r.status)); return j; });
     });
   }
-  function toast(msg) {
-    var t = $('toast'); t.textContent = msg; t.hidden = false;
-    clearTimeout(toast.t); toast.t = setTimeout(function () { t.hidden = true; }, 3200);
-  }
-  function num(jid) { return (jid || '').split('@')[0].split(':')[0]; }
-  function hue(s) { var h = 0; for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) % 360; return h; }
-  function avatar(el, name, jid) {
+  var sp = function (p) { return '/api/sessions/' + encodeURIComponent(sid) + p; };
+  function toast(msg) { var t = $('toast'); t.textContent = msg; t.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(function () { t.hidden = true; }, 3000); }
+  function num(j) { return (j || '').split('@')[0].split(':')[0]; }
+  function hue(s) { var h = 0; for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) % 997; return h; }
+  function initials(name) {
     var w = (name || '').replace(/[^\p{L}\p{N} ]/gu, '').trim().split(/\s+/);
-    el.textContent = /^\d+$/.test(w[0] || '') || !w[0] ? '#' : (w[0][0] + (w[1] ? w[1][0] : '')).toUpperCase();
-    el.style.background = 'hsl(' + hue(jid) + ' 32% 34%)';
+    if (!w[0] || /^\d+$/.test(w[0])) return '#';
+    return (w[0][0] + (w[1] ? w[1][0] : (w[0][1] || ''))).toUpperCase();
+  }
+  function paintAv(el, name, key) {
+    var h = hue(key || name || '');
+    el.textContent = initials(name);
+    el.style.background = 'linear-gradient(140deg,hsl(' + (140 + h % 50) + ' 45% 26%),hsl(' + (150 + h % 40) + ' 50% 13%))';
+    el.style.color = 'hsl(' + (140 + h % 40) + ' 70% 82%)';
   }
   function clock(ts) { return new Date(ts * 1000).toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' }); }
   function dayLabel(ts) {
     var d = new Date(ts * 1000), t = new Date(); t.setHours(0, 0, 0, 0);
     var diff = Math.round((t - new Date(d.getFullYear(), d.getMonth(), d.getDate())) / 864e5);
     if (diff === 0) return 'Hoje'; if (diff === 1) return 'Ontem';
-    return d.toLocaleDateString('pt-PT', { day: '2-digit', month: 'short', year: diff > 300 ? 'numeric' : undefined });
+    return d.toLocaleDateString('pt-PT', { day: '2-digit', month: 'short' });
   }
-  function shortTime(ts) { var d = new Date(ts * 1000); return dayLabel(ts) === 'Hoje' ? clock(ts) : d.toLocaleDateString('pt-PT', { day: '2-digit', month: '2-digit' }); }
+  function shortTime(ts) { return dayLabel(ts) === 'Hoje' ? clock(ts) : new Date(ts * 1000).toLocaleDateString('pt-PT', { day: '2-digit', month: '2-digit' }); }
+  var ST = { connected: 'Conectado', qr: 'À espera do QR', starting: 'A ligar', reconnecting: 'A reconectar', idle: 'Desligado' };
 
-  // ---------- ecrãs ----------
-  function gate(panel) {
-    $('gate').hidden = false; $('app').hidden = true;
-    ['p-login', 'p-qr', 'p-wait'].forEach(function (p) { $(p).hidden = p !== panel; });
-    if (panel !== 'p-qr') clearInterval(qrTimer);
-  }
-  function wait(lbl, msg) { $('waitlbl').textContent = lbl; $('waitmsg').textContent = msg; gate('p-wait'); }
-
-  $('p-login').addEventListener('submit', function (e) {
+  // ---------- entrada ----------
+  function showGate(which) { $('gate').hidden = false; $('app').hidden = true; $('login').hidden = which !== 'login'; $('booting').hidden = which !== 'boot'; }
+  $('login').addEventListener('submit', function (e) {
     e.preventDefault(); token = $('tok').value.trim(); $('loginerr').textContent = '';
-    if (!token) return;
-    store.set(token); connect();
+    if (token) { store.set(token); connect(); }
   });
+  function signout(msg) { token = ''; store.set(''); if (es) es.close(); es = null; showGate('login'); $('loginerr').textContent = msg || ''; }
+  $('signout').onclick = function () { signout(''); };
 
-  function logoutLocal(msg) {
-    token = ''; store.set(''); if (es) es.close(); es = null;
-    gate('p-login'); $('loginerr').textContent = msg || '';
-  }
-
-  function showQR(src) {
-    var fresh = $('qrimg').getAttribute('src') !== src;
-    $('qrimg').src = src; gate('p-qr');
-    if (!fresh) return;
-    var bar = $('qrbar'), start = Date.now(), life = 20000;
-    clearInterval(qrTimer);
-    qrTimer = setInterval(function () {
-      var left = Math.max(0, 1 - (Date.now() - start) / life);
-      bar.style.transform = 'scaleX(' + left + ')';
-    }, 200);
-  }
-
-  // ---------- ligação em tempo real ----------
   function connect() {
-    if (!token) return gate('p-login');
-    wait('A ligar ao servidor', 'Um momento.');
-    if (es) es.close();
-    // valida o token antes de abrir o canal de eventos
+    if (!token) return showGate('login');
+    showGate('boot'); $('bootlbl').textContent = 'A ligar ao servidor';
     api('/api/status').then(function () {
+      if (es) es.close();
       es = new EventSource('/api/events?token=' + encodeURIComponent(token));
-      es.addEventListener('status', function (e) { onStatus(JSON.parse(e.data)); });
+      es.addEventListener('sessions', function (e) {
+        S = {}; JSON.parse(e.data).forEach(function (s) { S[s.id] = s; }); sortOrder();
+        $('gate').hidden = true; $('app').hidden = false;
+        var want = store.pick();
+        select(S[sid] ? sid : S[want] ? want : order[0] || null, true);
+      });
+      es.addEventListener('session', function (e) {
+        var s = JSON.parse(e.data), was = S[s.id]; S[s.id] = s; sortOrder(); renderRail();
+        if (s.id === sid) {
+          renderClient();
+          if (!was || was.status !== s.status || was.qr !== s.qr) renderStage();
+          if (was && was.status !== s.status) {
+            if (s.status === 'connected') reloadChats(); else renderChats();
+          }
+        }
+      });
+      es.addEventListener('session-removed', function (e) {
+        var id = JSON.parse(e.data).id; delete S[id]; delete chats[id]; sortOrder();
+        if (id === sid) select(order[0] || null); else renderRail();
+      });
       es.addEventListener('message', function (e) { onMessage(JSON.parse(e.data)); });
-      es.addEventListener('chat', function (e) { var c = JSON.parse(e.data); chats[c.jid] = c; renderChats(); if (c.jid === cur) head(); });
-      es.onerror = function () { setPill(false, 'Sem ligação ao servidor'); };
-    }).catch(function (e) { if (e.message !== '401') wait('Servidor indisponível', 'A tentar de novo em 5 segundos.'), setTimeout(connect, 5000); });
+      es.addEventListener('chat', function (e) {
+        var p = JSON.parse(e.data); (chats[p.session] = chats[p.session] || {})[p.chat.jid] = p.chat;
+        if (p.session === sid) { renderChats(); if (p.chat.jid === jid) head(); }
+      });
+    }).catch(function (e) {
+      if (e.message !== '401') { $('bootlbl').textContent = 'Servidor indisponível, a tentar de novo'; setTimeout(connect, 5000); }
+    });
+  }
+  function sortOrder() { order = Object.keys(S).sort(function (a, b) { return S[a].createdAt - S[b].createdAt; }); }
+
+  // ---------- clientes ----------
+  function renderRail() {
+    var box = $('clients'); box.textContent = '';
+    order.forEach(function (id) {
+      var s = S[id], b = document.createElement('button');
+      b.type = 'button'; b.className = 'cl' + (id === sid ? ' on' : ''); b.dataset.st = s.status;
+      b.title = s.name + ' · ' + (ST[s.status] || s.status); b.setAttribute('aria-label', b.title);
+      b.textContent = initials(s.name);
+      var d = document.createElement('i'); d.className = 'dot'; b.appendChild(d);
+      if (s.unread && id !== sid) { var n = document.createElement('span'); n.className = 'n'; n.textContent = s.unread > 99 ? '99+' : s.unread; b.appendChild(n); }
+      b.onclick = function () { select(id); };
+      box.appendChild(b);
+    });
+  }
+  function renderClient() {
+    var s = S[sid], card = $('clientcard');
+    card.hidden = !s; $('tools').hidden = !s || s.status !== 'connected';
+    if (!s) return;
+    var on = s.status === 'connected';
+    card.className = 'client ' + (on ? 'bright' : 'off');
+    $('cname').textContent = s.name;
+    $('cnum').textContent = s.me ? '+' + num(s.me) : 'Sem número ligado';
+    $('cstatus').lastChild.textContent = ST[s.status] || s.status;
+  }
+  function select(id, first) {
+    sid = id; jid = null; $('app').classList.remove('open');
+    if (id) store.pick(id);
+    renderRail(); renderClient(); renderStage();
+    $('chats').textContent = '';
+    if (id) reloadChats();
+  }
+  function reloadChats() {
+    var id = sid;
+    api(sp('/chats')).then(function (l) {
+      if (sid !== id) return;
+      chats[id] = {}; l.forEach(function (c) { chats[id][c.jid] = c; }); renderChats();
+    }).catch(function () {});
   }
 
-  function onStatus(s) {
-    if (s.status === 'connected') {
-      me = num(s.me);
-      if ($('app').hidden) { $('gate').hidden = true; $('app').hidden = false; loadChats(); }
-      setPill(true, 'Conectado');
-      $('meta').textContent = '+' + me;
-      fillN8n();
-    } else if (s.status === 'qr' && s.qr) {
-      showQR(s.qr);
-    } else if (!$('app').hidden && s.status === 'disconnected') {
-      setPill(false, 'A reconectar');
-    } else {
-      wait('A preparar o WhatsApp', 'O código QR aparece dentro de segundos.');
+  // painel central conforme o estado do cliente
+  function renderStage() {
+    var s = S[sid], conn = s && s.status === 'connected', open = conn && jid;
+    ['chead', 'msgs', 'composer'].forEach(function (x) { $(x).hidden = !open; });
+    $('stage').hidden = !!open;
+    var show = !s ? 'st-welcome' : conn ? 'st-pick' : s.status === 'qr' && s.qr ? 'st-qr' : s.status === 'idle' ? 'st-idle' : 'st-wait';
+    ['st-welcome', 'st-qr', 'st-idle', 'st-wait', 'st-pick'].forEach(function (x) { $(x).hidden = x !== show; });
+    if (show !== 'st-qr') { clearInterval(qrTimer); lastQR = ''; }
+    if (!s) return;
+    if (show === 'st-qr') {
+      $('qrfor').textContent = 'Ligar número · ' + s.name;
+      if (s.qr !== lastQR) {
+        lastQR = s.qr; $('qrimg').src = s.qr;
+        var start = Date.now(); clearInterval(qrTimer);
+        qrTimer = setInterval(function () { $('qrbar').style.transform = 'scaleX(' + Math.max(0, 1 - (Date.now() - start) / 20000) + ')'; }, 200);
+      }
+    }
+    if (show === 'st-idle') $('idlefor').textContent = s.name;
+    if (show === 'st-wait') {
+      $('waitlbl').textContent = s.status === 'reconnecting' ? 'A reconectar ' + s.name : 'A preparar ' + s.name;
+      $('waitmsg').textContent = s.status === 'reconnecting' ? 'A ligação caiu. O WA Lite tenta de novo sozinho.' : 'O código QR aparece dentro de segundos.';
+    }
+    if (show === 'st-pick' || show === 'st-idle' || show === 'st-qr' || show === 'st-wait') {
+      if (window.matchMedia('(max-width:860px)').matches && show !== 'st-pick') $('app').classList.add('open');
     }
   }
-  function setPill(ok, txt) { $('pill').classList.toggle('off', !ok); $('pilltxt').textContent = txt; }
+  $('genqr').onclick = function () { api(sp('/start'), { method: 'POST' }).catch(function (e) { toast(e.message); }); };
 
   // ---------- conversas ----------
-  function loadChats() {
-    api('/api/chats').then(function (l) { chats = {}; l.forEach(function (c) { chats[c.jid] = c; }); renderChats(); }).catch(function () {});
-  }
   function renderChats() {
     var box = $('chats'); box.textContent = '';
-    var list = Object.keys(chats).map(function (k) { return chats[k]; })
+    var s = S[sid]; if (!s) return;
+    var list = Object.keys(chats[sid] || {}).map(function (k) { return chats[sid][k]; })
       .filter(function (c) { return !filter || (c.name + ' ' + c.jid).toLowerCase().indexOf(filter) >= 0; })
       .sort(function (a, b) { return b.ts - a.ts; });
     if (!list.length) {
-      var e = document.createElement('div'); e.className = 'listempty';
-      e.textContent = filter ? 'Nenhuma conversa com esse nome.' : 'Ainda não há conversas. As mensagens novas aparecem aqui assim que chegarem.';
-      box.appendChild(e); return;
+      var e = document.createElement('div'); e.className = 'empty';
+      e.textContent = filter ? 'Nenhuma conversa com esse nome.' : s.status === 'connected' ? 'Ainda sem conversas. As mensagens novas aparecem aqui.' : 'Ligue o número para ver as conversas.';
+      box.appendChild(e);
+      if (s.status !== 'connected' && !filter) {
+        var go = document.createElement('button'); go.type = 'button'; go.className = 'btn sm'; go.style.marginTop = '12px';
+        go.textContent = 'Ligar número'; go.onclick = function () { $('app').classList.add('open'); };
+        e.appendChild(document.createElement('br')); e.appendChild(go);
+      }
+      return;
     }
     list.forEach(function (c) {
       var b = document.createElement('button'); b.type = 'button';
-      b.className = 'chat' + (c.jid === cur ? ' on' : '') + (c.unread ? ' unread' : '');
-      var av = document.createElement('div'); av.className = 'av'; avatar(av, c.name, c.jid);
+      b.className = 'chat' + (c.jid === jid ? ' on' : '') + (c.unread ? ' unread' : '');
+      var av = document.createElement('div'); av.className = 'av'; paintAv(av, c.name, c.jid);
       var mid = document.createElement('div'); mid.style.minWidth = '0';
       var nm = document.createElement('div'); nm.className = 'nm'; nm.textContent = c.name;
       var ls = document.createElement('div'); ls.className = 'ls'; ls.textContent = c.last || ' ';
@@ -451,38 +574,36 @@ pre.code{margin:0;padding:12px;background:var(--bg);border:1px solid var(--line)
   $('search').addEventListener('input', function () { filter = this.value.trim().toLowerCase(); renderChats(); });
 
   function head() {
-    var c = chats[cur] || { name: num(cur), jid: cur };
+    var c = (chats[sid] || {})[jid] || { name: '+' + num(jid) };
     $('ctitle').textContent = c.name;
-    $('csub').textContent = cur.indexOf('@g.us') > 0 ? 'Grupo' : '+' + num(cur);
-    $('cav').hidden = false; avatar($('cav'), c.name, cur);
+    $('csub').textContent = (jid.indexOf('@g.us') > 0 ? 'Grupo' : '+' + num(jid)) + ' · via ' + S[sid].name;
+    paintAv($('cav'), c.name, jid);
   }
-
   var lastDay = '';
-  function openChat(jid) {
-    cur = jid; $('body').classList.add('open'); $('composer').hidden = false;
-    head(); renderChats();
+  function openChat(j) {
+    jid = j; $('app').classList.add('open'); renderStage(); head(); renderChats();
     var box = $('msgs'); box.textContent = ''; lastDay = '';
-    api('/api/messages/' + encodeURIComponent(jid)).then(function (l) {
-      if (cur !== jid) return;
-      l.forEach(function (m) { bubble(m, false); });
-      box.scrollTop = box.scrollHeight;
+    var at = sid;
+    api(sp('/messages/' + encodeURIComponent(j))).then(function (l) {
+      if (sid !== at || jid !== j) return;
+      l.forEach(function (m) { bubble(m, false); }); box.scrollTop = box.scrollHeight;
     }).catch(function () {});
-    markRead(jid);
-    if (matchMedia('(min-width: 861px)').matches) $('txt').focus();
+    markRead(j);
+    if (window.matchMedia('(min-width:861px)').matches) $('txt').focus();
   }
-  function markRead(jid) {
-    if (chats[jid] && chats[jid].unread) { chats[jid].unread = 0; renderChats(); }
-    api('/api/read/' + encodeURIComponent(jid), { method: 'POST' }).catch(function () {});
+  function markRead(j) {
+    var c = (chats[sid] || {})[j];
+    if (c && c.unread) { c.unread = 0; renderChats(); }
+    api(sp('/read/' + encodeURIComponent(j)), { method: 'POST' }).catch(function () {});
   }
-
   function bubble(m, animate) {
     var box = $('msgs'), dl = dayLabel(m.ts);
-    if (dl !== lastDay) { var d = document.createElement('div'); d.className = 'day'; d.textContent = dl; box.appendChild(d); lastDay = dl; }
+    if (dl !== lastDay) { var d = document.createElement('span'); d.className = 'chip day'; d.textContent = dl; box.appendChild(d); lastDay = dl; }
     var el = document.createElement('div');
     el.className = 'm' + (m.fromMe ? ' me' : '') + (m.type !== 'text' ? ' media' : '') + (animate ? ' new' : '');
-    if (!m.fromMe && cur.indexOf('@g.us') > 0) {
+    if (!m.fromMe && jid.indexOf('@g.us') > 0) {
       var w = document.createElement('span'); w.className = 'who';
-      w.textContent = m.name || ('+' + num(m.sender)); w.style.color = 'hsl(' + hue(m.sender || '') + ' 60% 62%)';
+      w.textContent = m.name || ('+' + num(m.sender)); w.style.color = 'hsl(' + (130 + hue(m.sender || '') % 60) + ' 65% 66%)';
       el.appendChild(w);
     }
     el.appendChild(document.createTextNode(m.text));
@@ -491,22 +612,22 @@ pre.code{margin:0;padding:12px;background:var(--bg);border:1px solid var(--line)
     box.appendChild(el);
     if (stick || m.fromMe) box.scrollTop = box.scrollHeight;
   }
-
   function onMessage(p) {
-    chats[p.jid] = p.chat;
-    if (p.jid === cur) { bubble(p.entry, true); if (!p.entry.fromMe && !document.hidden) markRead(cur); }
+    (chats[p.session] = chats[p.session] || {})[p.jid] = p.chat;
+    if (p.session !== sid) return;
+    if (p.jid === jid) { bubble(p.entry, true); if (!p.entry.fromMe && !document.hidden) markRead(jid); }
     renderChats();
   }
-
-  $('back').onclick = function () { cur = null; $('body').classList.remove('open'); renderChats(); };
+  $('stageback').onclick = function () { $('app').classList.remove('open'); };
+  $('back').onclick = function () { jid = null; $('app').classList.remove('open'); renderStage(); renderChats(); };
 
   $('newchat').addEventListener('submit', function (e) {
     e.preventDefault();
     var n = $('nn').value.replace(/\D/g, '');
     if (n.length < 8) return toast('Use o formato internacional, ex. 351912345678');
-    var jid = n + '@s.whatsapp.net';
-    if (!chats[jid]) chats[jid] = { jid: jid, name: '+' + n, last: '', ts: Math.floor(Date.now() / 1000), unread: 0 };
-    $('nn').value = ''; openChat(jid);
+    var j = n + '@s.whatsapp.net'; chats[sid] = chats[sid] || {};
+    if (!chats[sid][j]) chats[sid][j] = { jid: j, name: '+' + n, last: '', ts: Math.floor(Date.now() / 1000), unread: 0 };
+    $('nn').value = ''; openChat(j);
   });
 
   var txt = $('txt');
@@ -515,53 +636,83 @@ pre.code{margin:0;padding:12px;background:var(--bg);border:1px solid var(--line)
   txt.addEventListener('keydown', function (e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); $('composer').requestSubmit(); } });
   $('composer').addEventListener('submit', function (e) {
     e.preventDefault();
-    var t = txt.value.trim(); if (!t || !cur) return;
+    var t = txt.value.trim(); if (!t || !jid) return;
     txt.value = ''; grow();
-    api('/api/send', { method: 'POST', body: { to: cur, text: t } }).catch(function (err) {
+    api(sp('/send'), { method: 'POST', body: { to: jid, text: t } }).catch(function (err) {
       if (err.message !== '401') { toast('Não enviado: ' + err.message); txt.value = t; grow(); }
     });
   });
 
-  // ---------- desligar ----------
-  $('logout').onclick = function () { $('confirm').hidden = false; $('cfno').focus(); };
-  $('cfno').onclick = function () { $('confirm').hidden = true; };
-  $('confirm').addEventListener('click', function (e) { if (e.target === this) this.hidden = true; });
-  $('cfyes').onclick = function () {
-    $('confirm').hidden = true;
-    api('/api/logout', { method: 'POST' }).then(function () {
-      chats = {}; cur = null; $('body').classList.remove('open');
-      wait('Sessão terminada', 'A gerar um novo código QR.');
-    }).catch(function (e) { toast(e.message); });
+  // ---------- diálogos ----------
+  function openDlg(id) { $(id).hidden = false; var f = $(id).querySelector('input'); if (f) setTimeout(function () { f.focus(); }, 30); }
+  function closeDlgs() { ['dlg-add', 'dlg-edit'].forEach(function (x) { $(x).hidden = true; }); $('drawer').hidden = true; }
+  document.querySelectorAll('[data-close]').forEach(function (b) { b.onclick = closeDlgs; });
+  document.querySelectorAll('.scrim').forEach(function (s) { s.addEventListener('click', function (e) { if (e.target === s) closeDlgs(); }); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeDlgs(); });
+
+  function startAdd() { $('addname').value = ''; $('addhook').value = ''; $('adderr').textContent = ''; openDlg('dlg-add'); }
+  $('addclient').onclick = startAdd; $('welcomeadd').onclick = startAdd;
+  $('addform').addEventListener('submit', function (e) {
+    e.preventDefault(); $('adderr').textContent = '';
+    api('/api/sessions', { method: 'POST', body: { name: $('addname').value.trim(), webhook: $('addhook').value.trim() } })
+      .then(function (s) { S[s.id] = s; sortOrder(); closeDlgs(); select(s.id); toast('Cliente criado. Escaneie o QR.'); })
+      .catch(function (err) { $('adderr').textContent = err.message; });
+  });
+
+  var armed = false;
+  $('editclient').onclick = function () {
+    var s = S[sid]; if (!s) return;
+    armed = false; $('remove').textContent = 'Remover cliente';
+    $('editt').textContent = s.name; $('editname').value = s.name; $('edithook').value = s.webhook || ''; $('editerr').textContent = '';
+    var kv = $('editkv'); kv.textContent = '';
+    [['ID para o n8n', s.id], ['Número', s.me ? '+' + num(s.me) : '—'], ['Estado', ST[s.status] || s.status]].forEach(function (r) {
+      var dt = document.createElement('dt'); dt.textContent = r[0]; var dd = document.createElement('dd'); dd.textContent = r[1]; kv.appendChild(dt); kv.appendChild(dd);
+    });
+    $('unlink').hidden = s.status === 'idle';
+    openDlg('dlg-edit');
+  };
+  $('editform').addEventListener('submit', function (e) {
+    e.preventDefault();
+    api(sp(''), { method: 'PATCH', body: { name: $('editname').value.trim(), webhook: $('edithook').value.trim() } })
+      .then(function () { closeDlgs(); toast('Guardado'); }).catch(function (err) { $('editerr').textContent = err.message; });
+  });
+  $('unlink').onclick = function () {
+    api(sp('/logout'), { method: 'POST' }).then(function () { closeDlgs(); jid = null; renderStage(); toast('WhatsApp desligado'); }).catch(function (e) { toast(e.message); });
+  };
+  $('remove').onclick = function () {
+    if (!armed) { armed = true; this.textContent = 'Clique de novo para remover'; return; }
+    var name = S[sid].name;
+    api(sp(''), { method: 'DELETE' }).then(function () { closeDlgs(); toast('"' + name + '" removido'); }).catch(function (e) { toast(e.message); });
   };
 
-  // ---------- gaveta n8n ----------
-  $('openn8n').onclick = function () { $('drawer').hidden = false; fillN8n(); };
-  $('closen8n').onclick = function () { $('drawer').hidden = true; };
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { $('drawer').hidden = true; $('confirm').hidden = true; } });
-  function curlText() {
-    return 'POST ' + location.origin + '/api/send\n' +
-      'Authorization: Bearer <API_TOKEN>\n' +
-      'Content-Type: application/json\n\n' +
-      '{ "to": "351912345678", "text": "Olá!" }\n\n' +
-      '// imagem: { "to": "…", "image": "https://…/foto.jpg", "caption": "…" }';
+  // ---------- n8n ----------
+  $('openn8n').onclick = function () { fillN8n(); $('drawer').hidden = false; };
+  $('closen8n').onclick = closeDlgs;
+  function sendExample() {
+    var id = sid || 'id-do-cliente';
+    return 'POST ' + location.origin + '/api/send\nAuthorization: Bearer <API_TOKEN>\nContent-Type: application/json\n\n' +
+      JSON.stringify({ session: id, to: '351912345678', text: 'Olá!' }, null, 2) +
+      '\n\n// responder pelo mesmo número que recebeu:\n// "session": "{{ $json.body.session }}"\n// "to": "{{ $json.body.chat }}"';
   }
   function fillN8n() {
-    $('curl').textContent = curlText();
-    api('/api/status').then(function (s) {
+    var s = S[sid] || { id: 'id-do-cliente', name: 'Cliente', me: '' };
+    $('payload').textContent = JSON.stringify({
+      event: 'message', session: s.id, sessionName: s.name, sessionNumber: num(s.me) || '351910000000',
+      chat: '351912345678@s.whatsapp.net', chatName: 'Marta Silva', text: 'Olá!', type: 'text', isGroup: false, fromMe: false, timestamp: 1760480000
+    }, null, 2);
+    $('curl').textContent = sendExample();
+    api('/api/status').then(function (st) {
       var kv = $('kv'); kv.textContent = '';
-      [['Estado', s.status], ['Número', '+' + num(s.me)], ['Conversas guardadas', s.chats], ['Memória do processo', s.memoryMB + ' MB']]
-        .forEach(function (r) {
-          var dt = document.createElement('dt'); dt.textContent = r[0];
-          var dd = document.createElement('dd'); dd.textContent = r[1];
-          kv.appendChild(dt); kv.appendChild(dd);
-        });
+      var on = st.sessions.filter(function (x) { return x.status === 'connected'; }).length;
+      [['Clientes', st.sessions.length + ' de ' + st.maxSessions], ['Ligados', on], ['Memória', st.memoryMB + ' MB']].forEach(function (r) {
+        var dt = document.createElement('dt'); dt.textContent = r[0]; var dd = document.createElement('dd'); dd.textContent = r[1]; kv.appendChild(dt); kv.appendChild(dd);
+      });
     }).catch(function () {});
   }
   $('copycurl').onclick = function () {
-    var t = curlText();
-    if (navigator.clipboard) navigator.clipboard.writeText(t).then(function () { toast('Exemplo copiado'); }, sel);
-    else sel();
+    var t = sendExample();
     function sel() { var r = document.createRange(); r.selectNodeContents($('curl')); var s = getSelection(); s.removeAllRanges(); s.addRange(r); toast('Selecionado, use Ctrl+C'); }
+    if (navigator.clipboard) navigator.clipboard.writeText(t).then(function () { toast('Exemplo copiado'); }, sel); else sel();
   };
 
   connect();

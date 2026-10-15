@@ -43,10 +43,14 @@ const digits = (s) => String(s).replace(/\D/g, '');
 const asJid = (to) => (String(to).includes('@') ? String(to) : `${digits(to)}@s.whatsapp.net`);
 const fmtTime = (ts) => new Date(ts * 1000).toLocaleString('pt-PT', { timeZone: 'Europe/Lisbon' });
 
+// Prefixo da API para um cliente (id ou nome). Sem cliente usa o primeiro.
+const base = (session) => (session ? `/api/sessions/${encodeURIComponent(session)}` : '/api');
+const sessionArg = z.string().optional().describe('Cliente: id ou nome (ver wa_list_sessions). Vazio usa o primeiro cliente.');
+
 // Resolve "Marta", "+351 912 345 678" ou um jid para o jid da conversa
-async function resolveChat(ref) {
+async function resolveChat(ref, session) {
   if (String(ref).includes('@')) return String(ref);
-  const chats = await wa('/api/chats');
+  const chats = await wa(base(session) + '/chats');
   const q = String(ref).trim().toLowerCase();
   const d = digits(ref);
   const hit = chats.find((c) => c.name.toLowerCase() === q)
@@ -58,11 +62,26 @@ async function resolveChat(ref) {
 }
 
 // ---------- servidor ----------
-const server = new McpServer({ name: 'wa-lite', version: '1.0.0' });
+const server = new McpServer({ name: 'wa-lite', version: '2.0.0' });
+
+server.registerTool('wa_list_sessions', {
+  title: 'Listar clientes',
+  description: 'Lista os clientes (um número de WhatsApp cada) com id, nome, número, estado da ligação, conversas e mensagens por ler. Use o id ou o nome no parâmetro "session" das outras ferramentas.',
+  inputSchema: {},
+}, run(async () => {
+  const st = await wa('/api/status');
+  return {
+    clientes: st.sessions.map((s) => ({
+      id: s.id, nome: s.name, numero: s.me ? '+' + s.me.split('@')[0].split(':')[0] : null,
+      estado: s.status, conversas: s.chats, por_ler: s.unread, webhook_proprio: s.webhook || null,
+    })),
+    limite: st.maxSessions, memoriaMB: st.memoryMB,
+  };
+}));
 
 server.registerTool('wa_status', {
-  title: 'Estado do WhatsApp',
-  description: 'Mostra se o WA Lite está conectado ao WhatsApp, o número ligado, quantas conversas guarda e a memória usada.',
+  title: 'Estado do servidor',
+  description: 'Mostra o estado de todos os clientes do WA Lite e a memória usada pelo servidor.',
   inputSchema: {},
 }, run(async () => wa('/api/status')));
 
@@ -70,11 +89,12 @@ server.registerTool('wa_list_chats', {
   title: 'Listar conversas',
   description: 'Lista as conversas mais recentes (nome, jid, última mensagem, não lidas). Pode filtrar por nome ou número.',
   inputSchema: {
+    session: sessionArg,
     search: z.string().optional().describe('Texto a procurar no nome ou número'),
     limit: z.number().int().min(1).max(100).default(20).describe('Máximo de conversas'),
   },
-}, run(async ({ search, limit }) => {
-  let chats = await wa('/api/chats');
+}, run(async ({ session, search, limit }) => {
+  let chats = await wa(base(session) + '/chats');
   if (search) { const q = search.toLowerCase(); chats = chats.filter((c) => (c.name + c.jid).toLowerCase().includes(q)); }
   return chats.slice(0, limit).map((c) => ({ jid: c.jid, name: c.name, last: c.last, unread: c.unread, at: fmtTime(c.ts) }));
 }));
@@ -83,12 +103,13 @@ server.registerTool('wa_get_messages', {
   title: 'Ler mensagens',
   description: 'Devolve as últimas mensagens de uma conversa. "chat" aceita o nome, o número (351912345678) ou o jid. Não marca como lida.',
   inputSchema: {
+    session: sessionArg,
     chat: z.string().describe('Nome, número internacional ou jid'),
     limit: z.number().int().min(1).max(150).default(20),
   },
-}, run(async ({ chat, limit }) => {
-  const jid = await resolveChat(chat);
-  const msgs = await wa('/api/messages/' + encodeURIComponent(jid));
+}, run(async ({ session, chat, limit }) => {
+  const jid = await resolveChat(chat, session);
+  const msgs = await wa(base(session) + '/messages/' + encodeURIComponent(jid));
   return { chat: jid, messages: msgs.slice(-limit).map((m) => ({ at: fmtTime(m.ts), from: m.fromMe ? 'eu' : (m.name || m.sender), type: m.type, text: m.text })) };
 }));
 
@@ -96,16 +117,18 @@ server.registerTool('wa_send_text', {
   title: 'Enviar texto',
   description: 'Envia uma mensagem de texto pelo WhatsApp conectado. ATENÇÃO: a mensagem é realmente enviada ao destinatário; confirme com o utilizador antes de a enviar a um contacto real.',
   inputSchema: {
+    session: sessionArg,
     to: z.string().describe('Número internacional sem + (351912345678), ou jid de grupo'),
     text: z.string().min(1).max(4000),
   },
   annotations: { destructiveHint: false, openWorldHint: true },
-}, run(async ({ to, text }) => wa('/api/send', { method: 'POST', body: { to: asJid(to), text } })));
+}, run(async ({ session, to, text }) => wa(base(session) + '/send', { method: 'POST', body: { to: asJid(to), text } })));
 
 server.registerTool('wa_send_media', {
   title: 'Enviar imagem ou documento',
   description: 'Envia uma imagem ou um documento a partir de um URL público. A mensagem é realmente enviada; confirme com o utilizador antes.',
   inputSchema: {
+    session: sessionArg,
     to: z.string().describe('Número internacional sem + ou jid'),
     kind: z.enum(['image', 'document']),
     url: z.string().url().describe('URL público do ficheiro'),
@@ -113,18 +136,21 @@ server.registerTool('wa_send_media', {
     fileName: z.string().optional().describe('Nome do ficheiro (só para documentos)'),
   },
   annotations: { destructiveHint: false, openWorldHint: true },
-}, run(async ({ to, kind, url, caption, fileName }) =>
-  wa('/api/send', { method: 'POST', body: { to: asJid(to), [kind]: url, caption, fileName } })));
+}, run(async ({ session, to, kind, url, caption, fileName }) =>
+  wa(base(session) + '/send', { method: 'POST', body: { to: asJid(to), [kind]: url, caption, fileName } })));
 
 server.registerTool('wa_mark_read', {
   title: 'Marcar como lida',
   description: 'Marca uma conversa como lida, também no telemóvel.',
-  inputSchema: { chat: z.string().describe('Nome, número ou jid') },
-}, run(async ({ chat }) => wa('/api/read/' + encodeURIComponent(await resolveChat(chat)), { method: 'POST' })));
+  inputSchema: { session: sessionArg, chat: z.string().describe('Nome, número ou jid') },
+}, run(async ({ session, chat }) => wa(base(session) + '/read/' + encodeURIComponent(await resolveChat(chat, session)), { method: 'POST' })));
 
 // ---------- ajuda para o n8n ----------
 const SAMPLE = {
   event: 'message',
+  session: 'br4-viagens',
+  sessionName: 'BR4 Viagens',
+  sessionNumber: '351910000001',
   id: '3EB0A1B2C3D4E5F6A7B8',
   chat: '351912345678@s.whatsapp.net',
   chatName: 'Marta Silva',
@@ -143,8 +169,9 @@ server.registerTool('n8n_webhook_payload', {
   inputSchema: {},
 }, run(async () => ({
   sample: SAMPLE,
-  nota: 'O nó Webhook do n8n coloca o JSON recebido dentro de "body".',
+  nota: 'O nó Webhook do n8n coloca o JSON recebido dentro de "body". O campo "session" diz de que cliente veio; envie-o de volta no /api/send para responder pelo mesmo número. Cada cliente pode ter o seu próprio webhook (definições do cliente na interface).',
   expressoes: {
+    cliente: '{{ $json.body.session }}',
     texto: '{{ $json.body.text }}',
     numero_para_responder: '{{ $json.body.chat }}',
     nome: '{{ $json.body.chatName }}',
@@ -152,12 +179,13 @@ server.registerTool('n8n_webhook_payload', {
     enviada_por_mim: '{{ $json.body.fromMe }}',
     tipo: '{{ $json.body.type }}',
   },
-  envio: { metodo: 'POST', url: `${N8N_BASE}/api/send`, header: 'Authorization: Bearer <API_TOKEN>', corpo: { to: '351912345678', text: 'Olá' } },
+  envio: { metodo: 'POST', url: `${N8N_BASE}/api/send`, header: 'Authorization: Bearer <API_TOKEN>', corpo: { session: 'br4-viagens', to: '351912345678', text: 'Olá' } },
 })));
 
 const uid = () => crypto.randomUUID();
 
-function httpSendNode({ to = '={{ $json.body.chat }}', message = 'Olá!', position = [680, 300], name = 'Enviar WhatsApp' }) {
+const jsx = (v) => (String(v).startsWith('=') ? String(v).replace(/^=\{\{\s*|\s*\}\}$/g, '') : JSON.stringify(v));
+function httpSendNode({ to = '={{ $json.body.chat }}', message = 'Olá!', session = '={{ $json.body.session }}', position = [680, 300], name = 'Enviar WhatsApp' }) {
   return {
     id: uid(), name, type: 'n8n-nodes-base.httpRequest', typeVersion: 4.2, position,
     parameters: {
@@ -167,7 +195,7 @@ function httpSendNode({ to = '={{ $json.body.chat }}', message = 'Olá!', positi
       genericAuthType: 'httpHeaderAuth',
       sendBody: true,
       specifyBody: 'json',
-      jsonBody: `={{ JSON.stringify({ to: ${to.startsWith('=') ? to.replace(/^=\{\{\s*|\s*\}\}$/g, '') : JSON.stringify(to)}, text: ${message.startsWith('=') ? message.replace(/^=\{\{\s*|\s*\}\}$/g, '') : JSON.stringify(message)} }) }}`,
+      jsonBody: `={{ JSON.stringify({ session: ${jsx(session)}, to: ${jsx(to)}, text: ${jsx(message)} }) }}`,
       options: {},
     },
     credentials: { httpHeaderAuth: { id: 'TROCAR', name: 'WA Lite token' } },
@@ -179,15 +207,16 @@ server.registerTool('n8n_send_node', {
   title: 'Nó n8n para enviar WhatsApp',
   description: 'Gera o JSON de um nó "HTTP Request" do n8n já configurado para enviar mensagens pelo WA Lite. Pode colar-se no canvas do n8n. Requer uma credencial "Header Auth" com Name=Authorization e Value=Bearer <API_TOKEN>.',
   inputSchema: {
+    session: z.string().default('={{ $json.body.session }}').describe('Cliente que envia: id fixo (ex. br4-viagens) ou expressão n8n. Por defeito responde pelo cliente que recebeu.'),
     to: z.string().default('={{ $json.body.chat }}').describe('Destino: número fixo ou expressão n8n começada por ='),
     message: z.string().default('Olá!').describe('Texto: fixo ou expressão n8n começada por ='),
   },
-}, run(async ({ to, message }) => ({
+}, run(async ({ session, to, message }) => ({
   passos: [
     'No n8n: Credentials > New > Header Auth. Name = Authorization, Value = Bearer <API_TOKEN>. Guarde como "WA Lite token".',
     'Cole o JSON abaixo no canvas (Ctrl+V) e escolha essa credencial no nó.',
   ],
-  nodes: [httpSendNode({ to, message })],
+  nodes: [httpSendNode({ session, to, message })],
   connections: {},
 })));
 
@@ -212,7 +241,7 @@ const ifNode = (name, id, left, op, right, pos) => ({
 
 server.registerTool('n8n_starter_workflow', {
   title: 'Fluxo n8n inicial',
-  description: 'Gera um fluxo n8n completo, pronto a importar (Workflows > Import from file/URL ou colar no canvas). Modelos: "auto_reply" (responde com um texto fixo), "keyword_router" (responde conforme palavras-chave) e "echo_test" (devolve o que recebeu, para testar a ligação).',
+  description: 'Gera um fluxo n8n completo, pronto a importar (Workflows > Import from file/URL ou colar no canvas). As respostas saem sempre pelo mesmo cliente (número) que recebeu a mensagem. Modelos: "auto_reply" (responde com um texto fixo), "keyword_router" (responde conforme palavras-chave) e "echo_test" (devolve o que recebeu, para testar a ligação).',
   inputSchema: {
     template: z.enum(['auto_reply', 'keyword_router', 'echo_test']),
     webhookPath: z.string().default('wa-lite').describe('Caminho do webhook, ex. wa-lite'),
