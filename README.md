@@ -27,6 +27,9 @@ Ajuste `User` e `WorkingDirectory` no ficheiro se a pasta não for `/home/dietpi
   - Imagem: `{ "to": "351912345678", "image": "https://…/foto.jpg", "caption": "…" }`
   - Documento: `{ "to": "…", "document": "https://…/ficheiro.pdf", "fileName": "cotacao.pdf" }`
 
+## MCP (opcional)
+A pasta `mcp/` tem um servidor MCP que liga o Claude ao WA Lite e gera fluxos n8n. Corre no seu computador, não no DietPi. Veja `mcp/README.md`.
+
 ## Rotas
 | Rota | Uso |
 |---|---|
