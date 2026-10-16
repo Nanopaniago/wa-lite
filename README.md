@@ -32,6 +32,7 @@ Ajuste `User` e `WorkingDirectory` no ficheiro se a pasta não for `/home/dietpi
   - Para responder pelo mesmo número que recebeu: `"session": "{{ $json.body.session }}"`. Sem `session`, usa o primeiro cliente.
   - Imagem: `{ "to": "351912345678", "image": "https://…/foto.jpg", "caption": "…" }`
   - Documento: `{ "to": "…", "document": "https://…/ficheiro.pdf", "fileName": "cotacao.pdf" }`
+  - Figurinha: `{ "to": "…", "sticker": "https://…/figura.webp" }` (WebP 512×512, animada até 500 KB)
 - **Anexos recebidos:** com `MEDIA_FORWARD=true`, quando chega um PDF, DOCX ou imagem (fora de grupos), o webhook traz `media: { url, mimetype, fileName, size }`. Descarregue com `GET http://IP:3100<url>` e o header `Authorization: Bearer <API_TOKEN>`. Os ficheiros são apagados após `MEDIA_TTL_MIN` minutos. Acima de `MEDIA_MAX_MB`, chega `media.skipped` com o motivo.
 - **Botões de link:** `POST /api/send` aceita `buttons: [{ "label": "Abrir", "url": "https://…" }]` (até 3, texto até 20 caracteres) e `footer`. São botões nativos do WhatsApp (*cta_url*); números normais (não API oficial) nem sempre os mostram em todas as versões. Se não aparecerem, ponha `WA_BUTTONS=false` e o link segue escrito no texto. Se o envio do botão falhar, o WA Lite manda o link no texto automaticamente.
 

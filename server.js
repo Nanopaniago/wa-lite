@@ -545,18 +545,19 @@ async function sendButtons(s, jid, text, buttons, footer) {
   return msg.key;
 }
 
-// Corpo: { to, text, buttons?: [{label, url}], footer? } ou { to, image|document: url, caption, fileName }; opcional "session"
+// Corpo: { to, text, buttons?: [{label, url}], footer? } ou { to, image|document|sticker: url, caption, fileName }; opcional "session"
 const send = wrap(async (req, res) => {
   const s = req.sess;
-  const { to, image, document, caption, fileName, footer } = req.body || {};
+  const { to, image, document, sticker, caption, fileName, footer } = req.body || {};
   let { text } = req.body || {};
   const buttons = cleanButtons(req.body?.buttons);
   if (!text && buttons.length) text = ' ';
-  if (!to || !(text || image || document)) return res.status(400).json({ error: 'Indique "to" e "text" (ou "image"/"document" com URL)' });
+  if (!to || !(text || image || document || sticker)) return res.status(400).json({ error: 'Indique "to" e "text" (ou "image"/"document"/"sticker" com URL)' });
   if (s.status !== 'connected') return res.status(503).json({ error: `O WhatsApp do cliente "${s.meta.name}" não está conectado` });
   const jid = toJid(to);
   let content, label, type = 'text';
-  if (image) { content = { image: { url: image }, caption }; label = caption || '📷 Imagem'; type = 'image'; }
+  if (sticker) { content = { sticker: { url: sticker } }; label = '🎟️ Figurinha'; type = 'sticker'; }
+  else if (image) { content = { image: { url: image }, caption }; label = caption || '📷 Imagem'; type = 'image'; }
   else if (document) {
     const isPdf = /\.pdf$/i.test(fileName || document);
     content = { document: { url: document }, fileName: fileName || 'documento', mimetype: isPdf ? 'application/pdf' : 'application/octet-stream', caption };
