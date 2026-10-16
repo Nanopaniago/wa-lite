@@ -296,6 +296,8 @@ class Session {
             event: 'message', session: this.id, sessionName: this.meta.name, sessionNumber: num(this.me),
             id: entry.id, chat: jid, chatName: chat.name, from: sender, name: entry.name,
             fromMe, text: entry.text, type: ex.type, timestamp: ts, isGroup,
+            // número real do remetente quando o WhatsApp usa identificadores @lid (privacidade)
+            phone: phoneOf(m, sender),
           };
           const url = this.meta.webhook || WEBHOOK_URL;
           if (!fromMe && !isGroup && MEDIA_FORWARD && ['document', 'image'].includes(ex.type)) {
@@ -494,6 +496,15 @@ const markRead = (req, res) => {
   }
   res.json({ ok: true });
 };
+
+// Número de telefone do remetente. Em conversas @lid o WhatsApp esconde-o no remoteJid,
+// mas o Baileys traz o número em senderPn / remoteJidAlt / participantPn quando o conhece.
+function phoneOf(m, sender) {
+  const k = m.key || {};
+  const cand = [k.senderPn, k.remoteJidAlt, k.participantPn, k.participantAlt, sender, k.remoteJid]
+    .find((j) => typeof j === 'string' && j.endsWith('@s.whatsapp.net'));
+  return cand ? cand.split('@')[0].split(':')[0] : '';
+}
 
 // ---------- Botões de link ----------
 function cleanButtons(list) {
