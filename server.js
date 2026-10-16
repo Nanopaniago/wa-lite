@@ -7,6 +7,7 @@ import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import makeWASocket, {
   useMultiFileAuthState,
+  makeCacheableSignalKeyStore,
   DisconnectReason,
   fetchLatestBaileysVersion,
   downloadMediaMessage,
@@ -140,6 +141,15 @@ async function getVersion() {
 }
 
 // ---------- Sessão: um número de WhatsApp por cliente ----------
+// Cache simples em memória (formato CacheStore do Baileys), com validade
+class MemCache {
+  constructor(ttlMs) { this.ttl = ttlMs; this.m = new Map(); }
+  get(k) { const e = this.m.get(k); if (!e) return undefined; if (e.t < Date.now()) { this.m.delete(k); return undefined; } return e.v; }
+  set(k, v) { this.m.set(k, { v, t: Date.now() + this.ttl }); if (this.m.size > 5000) this.m.delete(this.m.keys().next().value); }
+  del(k) { this.m.delete(k); }
+  flushAll() { this.m.clear(); }
+}
+
 class Session {
   constructor(meta) {
     this.meta = meta; // { id, name, webhook, createdAt }
@@ -149,6 +159,14 @@ class Session {
     fs.mkdirSync(this.dir, { recursive: true });
     this.chats = new Map();
     this.messages = new Map();
+    // Mensagens enviadas (conteúdo cifrado só no envio): o telemóvel de quem recebe pede-as outra vez quando
+    // não as consegue decifrar à primeira. Sem isto fica "Aguardando mensagem. Essa ação pode levar alguns instantes".
+    this.sentFile = path.join(this.dir, 'sent.json');
+    this.sent = new Map();
+    try {
+      for (const [id, v] of Object.entries(JSON.parse(fs.readFileSync(this.sentFile, 'utf8')))) this.sent.set(id, v);
+    } catch { /* ainda não existe */ }
+    this.retryCache = new MemCache(60 * 60 * 1000);
     this.groupNames = new Map();
     this.sock = null;
     this.status = 'idle'; // idle | starting | qr | connected | reconnecting
@@ -195,6 +213,22 @@ class Session {
     return chat;
   }
 
+  remember(id, message) {
+    if (!id || !message) return;
+    try {
+      this.sent.set(id, { b: Buffer.from(proto.Message.encode(message).finish()).toString('base64'), t: Date.now() });
+      const old = Date.now() - 7 * 24 * 3600 * 1000;
+      for (const [k, v] of this.sent) { if (this.sent.size <= 2000 && v.t > old) break; this.sent.delete(k); }
+      clearTimeout(this.sentT);
+      this.sentT = setTimeout(() => fs.writeFile(this.sentFile, JSON.stringify(Object.fromEntries(this.sent)), () => {}), 2000);
+    } catch (e) { console.error('Não guardei a mensagem enviada:', e.message); }
+  }
+
+  async getMessage(key) {
+    const v = this.sent.get(key?.id);
+    return v ? proto.Message.decode(Buffer.from(v.b, 'base64')) : undefined;
+  }
+
   storeMessage(jid, entry, pushName) {
     const arr = this.messages.get(jid) || [];
     if (arr.some((x) => x.id === entry.id)) return null;
@@ -234,7 +268,9 @@ class Session {
     const { state, saveCreds } = await useMultiFileAuthState(this.authDir);
     const sock = makeWASocket({
       version: await getVersion(),
-      auth: state,
+      auth: { creds: state.creds, keys: makeCacheableSignalKeyStore(state.keys, log) },
+      getMessage: (key) => this.getMessage(key),   // reenvio quando o destinatário não decifra à primeira
+      msgRetryCounterCache: this.retryCache,
       logger: log,
       browser: ['WA Lite', 'Chrome', '3.0.0'],
       syncFullHistory: false,
@@ -537,6 +573,7 @@ async function sendButtons(s, jid, text, buttons, footer) {
       },
     },
   }, { userJid: s.sock.user?.id });
+  s.remember(msg.key.id, msg.message);
   await s.sock.relayMessage(jid, msg.message, {
     messageId: msg.key.id,
     additionalNodes: [{ tag: 'biz', attrs: {}, content: [{ tag: 'interactive', attrs: { type: 'native_flow', v: '1' },
@@ -578,6 +615,7 @@ const send = wrap(async (req, res) => {
     content = { text: label };
   } else { content = { text: String(text) }; label = String(text); }
   const sent = await s.sock.sendMessage(jid, content);
+  s.remember(sent?.key?.id, sent?.message);
   const entry = { id: sent.key.id, fromMe: true, text: label, type, ts: now(), name: '', sender: s.me };
   const chat = s.storeMessage(jid, entry);
   if (chat) broadcast('message', { session: s.id, jid, entry, chat });
