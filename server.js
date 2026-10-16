@@ -9,6 +9,9 @@ import makeWASocket, {
   useMultiFileAuthState,
   DisconnectReason,
   fetchLatestBaileysVersion,
+  downloadMediaMessage,
+  generateWAMessageFromContent,
+  proto,
 } from '@whiskeysockets/baileys';
 
 // ---------- Config ----------
@@ -29,6 +32,16 @@ const WEBHOOK_GROUPS = env.WEBHOOK_GROUPS !== 'false';
 const MAX_CHATS = Number(env.MAX_CHATS || 100);
 const MAX_MSGS = Number(env.MAX_MSGS_PER_CHAT || 150);
 const MAX_SESSIONS = Number(env.MAX_SESSIONS || 5);
+// Anexos recebidos (PDF, imagens) guardados por pouco tempo para o n8n os ir buscar
+const MEDIA_FORWARD = env.MEDIA_FORWARD === 'true';
+const MEDIA_MAX_MB = Number(env.MEDIA_MAX_MB || 10);
+const MEDIA_TTL_MIN = Number(env.MEDIA_TTL_MIN || 60);
+const MEDIA_DIR = path.join(DATA_DIR, 'media');
+const MEDIA_TYPES = { 'application/pdf': 'pdf', 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'docx' };
+if (MEDIA_FORWARD) fs.mkdirSync(MEDIA_DIR, { recursive: true });
+// Botões de link (cta_url). WA_BUTTONS=false envia o link no texto (mais compatível).
+const WA_BUTTONS = env.WA_BUTTONS !== 'false';
 
 if (!API_TOKEN || API_TOKEN.length < 12) {
   console.error('Defina um API_TOKEN com pelo menos 12 caracteres no .env.');
@@ -61,6 +74,40 @@ async function fireWebhook(url, payload, attempt = 1) {
     console.error(`Webhook falhou (${payload.session}):`, e.message);
   }
 }
+
+// Descarrega um anexo (documento ou imagem) e devolve { url, mimetype, fileName, size } ou null.
+async function saveMedia(session, m, type) {
+  if (!MEDIA_FORWARD || !['document', 'image'].includes(type)) return null;
+  let msg = m.message || {};
+  msg = msg.ephemeralMessage?.message || msg.viewOnceMessage?.message || msg.viewOnceMessageV2?.message
+    || msg.documentWithCaptionMessage?.message || msg;
+  const node = msg.documentMessage || msg.imageMessage;
+  if (!node) return null;
+  const mimetype = String(node.mimetype || '').split(';')[0];
+  const ext = MEDIA_TYPES[mimetype];
+  const size = Number(node.fileLength || 0);
+  if (!ext) return { skipped: 'tipo não suportado', mimetype };
+  if (size > MEDIA_MAX_MB * 1048576) return { skipped: `acima de ${MEDIA_MAX_MB} MB`, mimetype, size };
+  try {
+    const buf = await downloadMediaMessage(m, 'buffer', {}, { logger: log, reuploadRequest: session.sock.updateMediaMessage });
+    if (buf.length > MEDIA_MAX_MB * 1048576) return { skipped: `acima de ${MEDIA_MAX_MB} MB`, mimetype, size: buf.length };
+    const file = `${session.id}-${crypto.randomBytes(12).toString('hex')}.${ext}`;
+    fs.writeFileSync(path.join(MEDIA_DIR, file), buf);
+    return { url: `/api/media/${file}`, mimetype, fileName: node.fileName || `anexo.${ext}`, size: buf.length };
+  } catch (e) {
+    console.error(`Falha a descarregar anexo (${session.id}):`, e.message);
+    return { skipped: 'falha no download', mimetype };
+  }
+}
+
+// apaga anexos com mais de MEDIA_TTL_MIN minutos
+if (MEDIA_FORWARD) setInterval(() => {
+  const limit = Date.now() - MEDIA_TTL_MIN * 60000;
+  for (const f of fs.readdirSync(MEDIA_DIR)) {
+    const p = path.join(MEDIA_DIR, f);
+    try { if (fs.statSync(p).mtimeMs < limit) fs.unlinkSync(p); } catch {}
+  }
+}, 5 * 60000).unref();
 
 function extractText(m) {
   let msg = m.message || {};
@@ -245,11 +292,17 @@ class Session {
         broadcast('message', { session: this.id, jid, entry, chat });
 
         if ((!fromMe || WEBHOOK_FROM_ME) && (!isGroup || WEBHOOK_GROUPS)) {
-          fireWebhook(this.meta.webhook || WEBHOOK_URL, {
+          const payload = {
             event: 'message', session: this.id, sessionName: this.meta.name, sessionNumber: num(this.me),
             id: entry.id, chat: jid, chatName: chat.name, from: sender, name: entry.name,
             fromMe, text: entry.text, type: ex.type, timestamp: ts, isGroup,
-          });
+          };
+          const url = this.meta.webhook || WEBHOOK_URL;
+          if (!fromMe && !isGroup && MEDIA_FORWARD && ['document', 'image'].includes(ex.type)) {
+            saveMedia(this, m, ex.type).then((media) => fireWebhook(url, { ...payload, media }));
+          } else {
+            fireWebhook(url, payload);
+          }
         }
       }
     });
@@ -442,18 +495,75 @@ const markRead = (req, res) => {
   res.json({ ok: true });
 };
 
-// Corpo: { to, text } ou { to, image|document: url, caption, fileName }; opcional "session"
+// ---------- Botões de link ----------
+function cleanButtons(list) {
+  if (!Array.isArray(list)) return [];
+  return list.filter((b) => b && /^https:\/\//.test(String(b.url || '')) && String(b.label || '').trim())
+    .slice(0, 3).map((b) => ({ label: String(b.label).trim().slice(0, 20), url: String(b.url) }));
+}
+
+// Texto com o link escrito por baixo (quando os botões estão desligados ou falham)
+const withLinks = (text, buttons) => [String(text || '').trim(), ...buttons.map((b) => `👉 *${b.label}*\n${b.url}`)]
+  .filter(Boolean).join('\n\n');
+
+async function sendButtons(s, jid, text, buttons, footer) {
+  const msg = generateWAMessageFromContent(jid, {
+    viewOnceMessage: {
+      message: {
+        messageContextInfo: { deviceListMetadata: {}, deviceListMetadataVersion: 2 },
+        interactiveMessage: proto.Message.InteractiveMessage.create({
+          body: { text: String(text || '') },
+          ...(footer ? { footer: { text: String(footer).slice(0, 60) } } : {}),
+          header: { title: '', hasMediaAttachment: false },
+          nativeFlowMessage: {
+            buttons: buttons.map((b) => ({
+              name: 'cta_url',
+              buttonParamsJson: JSON.stringify({ display_text: b.label, url: b.url, merchant_url: b.url }),
+            })),
+            messageParamsJson: '',
+          },
+        }),
+      },
+    },
+  }, { userJid: s.sock.user?.id });
+  await s.sock.relayMessage(jid, msg.message, {
+    messageId: msg.key.id,
+    additionalNodes: [{ tag: 'biz', attrs: {}, content: [{ tag: 'interactive', attrs: { type: 'native_flow', v: '1' },
+      content: [{ tag: 'native_flow', attrs: { v: '9', name: 'mixed' } }] }] }],
+  });
+  return msg.key;
+}
+
+// Corpo: { to, text, buttons?: [{label, url}], footer? } ou { to, image|document: url, caption, fileName }; opcional "session"
 const send = wrap(async (req, res) => {
   const s = req.sess;
-  const { to, text, image, document, caption, fileName } = req.body || {};
+  const { to, image, document, caption, fileName, footer } = req.body || {};
+  let { text } = req.body || {};
+  const buttons = cleanButtons(req.body?.buttons);
+  if (!text && buttons.length) text = ' ';
   if (!to || !(text || image || document)) return res.status(400).json({ error: 'Indique "to" e "text" (ou "image"/"document" com URL)' });
   if (s.status !== 'connected') return res.status(503).json({ error: `O WhatsApp do cliente "${s.meta.name}" não está conectado` });
   const jid = toJid(to);
   let content, label, type = 'text';
   if (image) { content = { image: { url: image }, caption }; label = caption || '📷 Imagem'; type = 'image'; }
   else if (document) {
-    content = { document: { url: document }, fileName: fileName || 'documento', mimetype: 'application/octet-stream', caption };
+    const isPdf = /\.pdf$/i.test(fileName || document);
+    content = { document: { url: document }, fileName: fileName || 'documento', mimetype: isPdf ? 'application/pdf' : 'application/octet-stream', caption };
     label = `📄 ${fileName || 'Documento'}`; type = 'document';
+  } else if (buttons.length) {
+    label = withLinks(text, buttons); type = 'buttons';
+    if (WA_BUTTONS) {
+      try {
+        const key = await sendButtons(s, jid, text, buttons, footer);
+        const entry = { id: key.id, fromMe: true, text: label, type, ts: now(), name: '', sender: s.me };
+        const chat = s.storeMessage(jid, entry);
+        if (chat) broadcast('message', { session: s.id, jid, entry, chat });
+        return res.json({ ok: true, id: key.id, to: jid, session: s.id, buttons: true });
+      } catch (e) {
+        console.error(`Botões falharam (${s.id}), envio o link no texto:`, e.message);
+      }
+    }
+    content = { text: label };
   } else { content = { text: String(text) }; label = String(text); }
   const sent = await s.sock.sendMessage(jid, content);
   const entry = { id: sent.key.id, fromMe: true, text: label, type, ts: now(), name: '', sender: s.me };
@@ -468,6 +578,16 @@ for (const base of ['/api/sessions/:sid', '/api']) {
   app.post(`${base}/read/:jid`, auth, withSession, markRead);
   app.post(`${base}/send`, auth, withSession, send);
 }
+
+// anexos recebidos (só com MEDIA_FORWARD=true); nome aleatório, apagados após MEDIA_TTL_MIN
+app.get('/api/media/:file', auth, (req, res) => {
+  if (!MEDIA_FORWARD || !/^[a-z0-9-]+-[a-f0-9]{24}\.(pdf|jpg|png|webp|docx)$/.test(req.params.file)) {
+    return res.status(404).json({ error: 'Anexo não encontrado' });
+  }
+  const p = path.join(MEDIA_DIR, req.params.file);
+  if (!fs.existsSync(p)) return res.status(404).json({ error: 'Anexo expirou ou não existe' });
+  res.sendFile(p);
+});
 
 // compatibilidade com a v2: desliga o primeiro cliente
 app.post('/api/logout', auth, withSession, wrap(async (req, res) => { await req.sess.logout(); res.json({ ok: true }); }));
