@@ -166,6 +166,11 @@ class Session {
     try {
       for (const [id, v] of Object.entries(JSON.parse(fs.readFileSync(this.sentFile, 'utf8')))) this.sent.set(id, v);
     } catch { /* ainda não existe */ }
+    // Número → identificador @lid da conversa. O WhatsApp passou a usar @lid nas conversas; se o bot escrever
+    // para o número (@s.whatsapp.net) de quem já fala com ele por @lid, o telemóvel mostra "Aguardando mensagem".
+    this.lidFile = path.join(this.dir, 'lids.json');
+    this.lids = new Map();
+    try { for (const [pn, lid] of Object.entries(JSON.parse(fs.readFileSync(this.lidFile, 'utf8')))) this.lids.set(pn, lid); } catch {}
     this.retryCache = new MemCache(60 * 60 * 1000);
     this.groupNames = new Map();
     this.sock = null;
@@ -222,6 +227,27 @@ class Session {
       clearTimeout(this.sentT);
       this.sentT = setTimeout(() => fs.writeFile(this.sentFile, JSON.stringify(Object.fromEntries(this.sent)), () => {}), 2000);
     } catch (e) { console.error('Não guardei a mensagem enviada:', e.message); }
+  }
+
+  learnLid(pn, lid) {
+    if (!pn || !lid || !lid.endsWith('@lid') || this.lids.get(pn) === lid) return;
+    this.lids.set(pn, lid);
+    fs.writeFile(this.lidFile, JSON.stringify(Object.fromEntries(this.lids)), () => {});
+  }
+
+  // Para onde enviar: se a conversa com este número existe como @lid, escreve para lá (é o que o telemóvel
+  // da pessoa consegue decifrar); senão usa o número.
+  async route(jid) {
+    if (!jid.endsWith('@s.whatsapp.net') || this.chats.has(jid)) return jid;
+    const pn = jid.split('@')[0].split(':')[0];
+    let lid = this.lids.get(pn);
+    if (!lid && this.sock) {
+      try {
+        const [r] = (await this.sock.onWhatsApp(pn)) || [];
+        if (r?.lid) { lid = String(r.lid).includes('@') ? String(r.lid) : `${r.lid}@lid`; this.learnLid(pn, lid); }
+      } catch { /* sem resposta: fica o número */ }
+    }
+    return lid && this.chats.has(lid) ? lid : jid;
   }
 
   async getMessage(key) {
@@ -316,6 +342,7 @@ class Session {
         const jid = m.key.remoteJid;
         if (!jid || jid === 'status@broadcast' || jid.endsWith('@newsletter')) continue;
         const fromMe = !!m.key.fromMe;
+        if (jid.endsWith('@lid')) { const pn = phoneOf(m, ''); if (pn) this.learnLid(pn, jid); }
         const ts = Number(m.messageTimestamp || now());
         if (type !== 'notify' && !(fromMe && now() - ts < 120)) continue;
         const ex = extractText(m);
@@ -591,7 +618,7 @@ const send = wrap(async (req, res) => {
   if (!text && buttons.length) text = ' ';
   if (!to || !(text || image || document || sticker)) return res.status(400).json({ error: 'Indique "to" e "text" (ou "image"/"document"/"sticker" com URL)' });
   if (s.status !== 'connected') return res.status(503).json({ error: `O WhatsApp do cliente "${s.meta.name}" não está conectado` });
-  const jid = toJid(to);
+  const jid = await s.route(toJid(to));
   let content, label, type = 'text';
   if (sticker) { content = { sticker: { url: sticker } }; label = '🎟️ Figurinha'; type = 'sticker'; }
   else if (image) { content = { image: { url: image }, caption }; label = caption || '📷 Imagem'; type = 'image'; }
