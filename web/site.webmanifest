@@ -1,7 +1,7 @@
 {
-  "name": "Actual",
-  "short_name": "Actual",
-  "description": "A local-first personal finance tool",
+  "name": "nFinance",
+  "short_name": "nFinance",
+  "description": "Controlo financeiro da casa · Digital NPEH",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",
@@ -30,8 +30,8 @@
   ],
   "shortcuts": [
     {
-      "name": "Add Transaction",
-      "short_name": "Add Transaction",
+      "name": "Nova transação",
+      "short_name": "Nova transação",
       "description": "Add a new transaction",
       "url": "/transactions/new",
       "icons": [
@@ -42,8 +42,8 @@
       ]
     },
     {
-      "name": "Accounts",
-      "short_name": "Accounts",
+      "name": "Contas",
+      "short_name": "Contas",
       "description": "View all accounts",
       "url": "/accounts",
       "icons": [
@@ -54,8 +54,8 @@
       ]
     },
     {
-      "name": "Reports",
-      "short_name": "Reports",
+      "name": "Relatórios",
+      "short_name": "Relatórios",
       "description": "View reports",
       "url": "/reports",
       "icons": [
@@ -82,8 +82,8 @@
       "sizes": "350x600"
     }
   ],
-  "theme_color": "#5c3dbb",
-  "background_color": "#5c3dbb",
+  "theme_color": "#08070b",
+  "background_color": "#08070b",
   "display": "standalone",
   "start_url": "./"
 }
