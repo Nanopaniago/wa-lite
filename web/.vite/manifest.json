@@ -1,6 +1,6 @@
 {
   "../../node_modules/@capacitor/app/dist/esm/web.js": {
-    "file": "static/js/web.BPillF_0.chunk.js",
+    "file": "static/js/web.DPAtuRno.chunk.js",
     "name": "web",
     "src": "../../node_modules/@capacitor/app/dist/esm/web.js",
     "isDynamicEntry": true,
@@ -9,7 +9,7 @@
     ]
   },
   "../../node_modules/@capacitor/haptics/dist/esm/web.js": {
-    "file": "static/js/web.DZP9DCi0.chunk.js",
+    "file": "static/js/web.CL-cMYUX.chunk.js",
     "name": "web",
     "src": "../../node_modules/@capacitor/haptics/dist/esm/web.js",
     "isDynamicEntry": true,
@@ -101,86 +101,86 @@
     "src": "../../node_modules/workbox-window/build/workbox-window.prod.es5.mjs",
     "isDynamicEntry": true
   },
-  "_AutomaticSyncSettings.DwrndTGx.chunk.js": {
-    "file": "static/js/AutomaticSyncSettings.DwrndTGx.chunk.js",
+  "_AutomaticSyncSettings.Ba6-ODW4.chunk.js": {
+    "file": "static/js/AutomaticSyncSettings.Ba6-ODW4.chunk.js",
     "name": "AutomaticSyncSettings",
     "imports": [
       "_rolldown-runtime.Co92CJQJ.chunk.js",
-      "_months.D0iuYo1J.chunk.js",
+      "_months.Bylr3Hev.chunk.js",
       "_theme.DuCJPjK3.chunk.js",
-      "_Value.CDUl08nj.chunk.js",
-      "_DateSelect.Ci3SoiyB.chunk.js",
+      "_Value.BhHFGfMq.chunk.js",
+      "_DateSelect.CG4wZ9gi.chunk.js",
       "index.html"
     ]
   },
-  "_DateSelect.Ci3SoiyB.chunk.js": {
-    "file": "static/js/DateSelect.Ci3SoiyB.chunk.js",
+  "_DateSelect.CG4wZ9gi.chunk.js": {
+    "file": "static/js/DateSelect.CG4wZ9gi.chunk.js",
     "name": "DateSelect",
     "imports": [
       "_rolldown-runtime.Co92CJQJ.chunk.js",
-      "_months.D0iuYo1J.chunk.js",
+      "_months.Bylr3Hev.chunk.js",
       "_theme.DuCJPjK3.chunk.js"
     ]
   },
-  "_NotesTagFormatter.DS19RSyk.chunk.js": {
-    "file": "static/js/NotesTagFormatter.DS19RSyk.chunk.js",
+  "_NotesTagFormatter.BqPvF1Sz.chunk.js": {
+    "file": "static/js/NotesTagFormatter.BqPvF1Sz.chunk.js",
     "name": "NotesTagFormatter",
     "imports": [
       "_rolldown-runtime.Co92CJQJ.chunk.js",
-      "_months.D0iuYo1J.chunk.js",
+      "_months.Bylr3Hev.chunk.js",
       "_theme.DuCJPjK3.chunk.js",
-      "_Value.CDUl08nj.chunk.js",
-      "_useLocalPref.BfiFHNlc.chunk.js"
+      "_Value.BhHFGfMq.chunk.js",
+      "_useLocalPref.btvh9sSL.chunk.js"
     ]
   },
-  "_TransactionList.BDI6oGRs.chunk.js": {
-    "file": "static/js/TransactionList.BDI6oGRs.chunk.js",
+  "_TransactionList.Cfye8kdU.chunk.js": {
+    "file": "static/js/TransactionList.Cfye8kdU.chunk.js",
     "name": "TransactionList",
     "imports": [
       "_rolldown-runtime.Co92CJQJ.chunk.js",
-      "_months.D0iuYo1J.chunk.js",
+      "_months.Bylr3Hev.chunk.js",
       "_theme.DuCJPjK3.chunk.js",
-      "_Value.CDUl08nj.chunk.js",
-      "_DateSelect.Ci3SoiyB.chunk.js",
-      "_useLocalPref.BfiFHNlc.chunk.js",
+      "_Value.BhHFGfMq.chunk.js",
+      "_columns.Bdu4ydYM.chunk.js",
+      "_DateSelect.CG4wZ9gi.chunk.js",
+      "_useLocalPref.btvh9sSL.chunk.js",
+      "_NotesTagFormatter.BqPvF1Sz.chunk.js"
+    ]
+  },
+  "_TransactionList.qZlP0qtx.chunk.js": {
+    "file": "static/js/TransactionList.qZlP0qtx.chunk.js",
+    "name": "TransactionList",
+    "imports": [
+      "_rolldown-runtime.Co92CJQJ.chunk.js",
+      "_months.Bylr3Hev.chunk.js",
+      "_theme.DuCJPjK3.chunk.js",
+      "_Value.BhHFGfMq.chunk.js",
+      "_DateSelect.CG4wZ9gi.chunk.js",
+      "_useLocalPref.btvh9sSL.chunk.js",
       "index.html",
-      "_NotesTagFormatter.DS19RSyk.chunk.js"
+      "_NotesTagFormatter.BqPvF1Sz.chunk.js"
     ]
   },
-  "_TransactionList.BUpHBm11.chunk.js": {
-    "file": "static/js/TransactionList.BUpHBm11.chunk.js",
-    "name": "TransactionList",
-    "imports": [
-      "_rolldown-runtime.Co92CJQJ.chunk.js",
-      "_months.D0iuYo1J.chunk.js",
-      "_theme.DuCJPjK3.chunk.js",
-      "_Value.CDUl08nj.chunk.js",
-      "_columns.6kt9eNCw.chunk.js",
-      "_DateSelect.Ci3SoiyB.chunk.js",
-      "_useLocalPref.BfiFHNlc.chunk.js",
-      "_NotesTagFormatter.DS19RSyk.chunk.js"
-    ]
-  },
-  "_Value.CDUl08nj.chunk.js": {
-    "file": "static/js/Value.CDUl08nj.chunk.js",
+  "_Value.BhHFGfMq.chunk.js": {
+    "file": "static/js/Value.BhHFGfMq.chunk.js",
     "name": "Value",
     "imports": [
       "_rolldown-runtime.Co92CJQJ.chunk.js",
       "_build-shims.CVsLiQAy.chunk.js",
-      "_months.D0iuYo1J.chunk.js",
+      "_months.Bylr3Hev.chunk.js",
       "_theme.DuCJPjK3.chunk.js",
-      "_DateSelect.Ci3SoiyB.chunk.js",
-      "_useLocalPref.BfiFHNlc.chunk.js"
+      "_DateSelect.CG4wZ9gi.chunk.js",
+      "_useLocalPref.btvh9sSL.chunk.js"
     ],
     "dynamicImports": [
       "src/components/formula/FormulaEditor.tsx"
     ]
   },
-  "_bootstrapHyperFormula.CjAv6Bx8.chunk.js": {
-    "file": "static/js/bootstrapHyperFormula.CjAv6Bx8.chunk.js",
+  "_bootstrapHyperFormula.B4I2fer4.chunk.js": {
+    "file": "static/js/bootstrapHyperFormula.B4I2fer4.chunk.js",
     "name": "bootstrapHyperFormula",
     "imports": [
-      "_DateSelect.Ci3SoiyB.chunk.js"
+      "_DateSelect.CG4wZ9gi.chunk.js"
     ]
   },
   "_build-shims.CVsLiQAy.chunk.js": {
@@ -190,20 +190,20 @@
       "_rolldown-runtime.Co92CJQJ.chunk.js"
     ]
   },
-  "_columns.6kt9eNCw.chunk.js": {
-    "file": "static/js/columns.6kt9eNCw.chunk.js",
+  "_columns.Bdu4ydYM.chunk.js": {
+    "file": "static/js/columns.Bdu4ydYM.chunk.js",
     "name": "columns",
     "imports": [
       "_rolldown-runtime.Co92CJQJ.chunk.js",
       "_build-shims.CVsLiQAy.chunk.js",
-      "_months.D0iuYo1J.chunk.js",
+      "_months.Bylr3Hev.chunk.js",
       "_theme.DuCJPjK3.chunk.js",
-      "_Value.CDUl08nj.chunk.js",
-      "_useLocalPref.BfiFHNlc.chunk.js"
+      "_Value.BhHFGfMq.chunk.js",
+      "_useLocalPref.btvh9sSL.chunk.js"
     ]
   },
-  "_months.D0iuYo1J.chunk.js": {
-    "file": "static/js/months.D0iuYo1J.chunk.js",
+  "_months.Bylr3Hev.chunk.js": {
+    "file": "static/js/months.Bylr3Hev.chunk.js",
     "name": "months",
     "imports": [
       "_rolldown-runtime.Co92CJQJ.chunk.js",
@@ -274,29 +274,29 @@
       "_rolldown-runtime.Co92CJQJ.chunk.js"
     ]
   },
-  "_useLocalPref.BfiFHNlc.chunk.js": {
-    "file": "static/js/useLocalPref.BfiFHNlc.chunk.js",
+  "_useLocalPref.btvh9sSL.chunk.js": {
+    "file": "static/js/useLocalPref.btvh9sSL.chunk.js",
     "name": "useLocalPref",
     "imports": [
       "_rolldown-runtime.Co92CJQJ.chunk.js",
-      "_months.D0iuYo1J.chunk.js",
+      "_months.Bylr3Hev.chunk.js",
       "_theme.DuCJPjK3.chunk.js"
     ]
   },
   "index.html": {
-    "file": "static/js/index.0XAeHcUw.js",
+    "file": "static/js/index.CBIBCdJV.js",
     "name": "index",
     "src": "index.html",
     "isEntry": true,
     "imports": [
       "_rolldown-runtime.Co92CJQJ.chunk.js",
       "_build-shims.CVsLiQAy.chunk.js",
-      "_months.D0iuYo1J.chunk.js",
+      "_months.Bylr3Hev.chunk.js",
       "_theme.DuCJPjK3.chunk.js",
-      "_Value.CDUl08nj.chunk.js",
-      "_columns.6kt9eNCw.chunk.js",
-      "_DateSelect.Ci3SoiyB.chunk.js",
-      "_useLocalPref.BfiFHNlc.chunk.js"
+      "_Value.BhHFGfMq.chunk.js",
+      "_columns.Bdu4ydYM.chunk.js",
+      "_DateSelect.CG4wZ9gi.chunk.js",
+      "_useLocalPref.btvh9sSL.chunk.js"
     ],
     "dynamicImports": [
       "../../node_modules/absurd-sql/dist/indexeddb-main-thread-worker-e59fee74.js",
@@ -540,13 +540,13 @@
     "isDynamicEntry": true
   },
   "locale/pt-BR.json": {
-    "file": "static/js/pt-BR.BKbNVeOy.chunk.js",
+    "file": "static/js/pt-BR.CaCWCPsH.chunk.js",
     "name": "pt-BR",
     "src": "locale/pt-BR.json",
     "isDynamicEntry": true
   },
   "locale/pt.json": {
-    "file": "static/js/pt.C9NucLt9.chunk.js",
+    "file": "static/js/pt.CKtR7X_E.chunk.js",
     "name": "pt",
     "src": "locale/pt.json",
     "isDynamicEntry": true
@@ -650,38 +650,38 @@
     ]
   },
   "src/components/formula/FormulaEditor.tsx": {
-    "file": "static/js/FormulaEditor.BbMrMvrd.chunk.js",
+    "file": "static/js/FormulaEditor.Bu6o253a.chunk.js",
     "name": "FormulaEditor",
     "src": "src/components/formula/FormulaEditor.tsx",
     "isDynamicEntry": true,
     "imports": [
       "_rolldown-runtime.Co92CJQJ.chunk.js",
-      "_months.D0iuYo1J.chunk.js",
+      "_months.Bylr3Hev.chunk.js",
       "_theme.DuCJPjK3.chunk.js",
-      "_DateSelect.Ci3SoiyB.chunk.js",
+      "_DateSelect.CG4wZ9gi.chunk.js",
       "index.html",
-      "_bootstrapHyperFormula.CjAv6Bx8.chunk.js"
+      "_bootstrapHyperFormula.B4I2fer4.chunk.js"
     ]
   },
   "src/components/reports/ReportRouter.tsx": {
-    "file": "static/js/ReportRouter.SL8PsFJU.chunk.js",
+    "file": "static/js/ReportRouter.D7yrVYTm.chunk.js",
     "name": "ReportRouter",
     "src": "src/components/reports/ReportRouter.tsx",
     "isDynamicEntry": true,
     "imports": [
       "_rolldown-runtime.Co92CJQJ.chunk.js",
       "_build-shims.CVsLiQAy.chunk.js",
-      "_months.D0iuYo1J.chunk.js",
+      "_months.Bylr3Hev.chunk.js",
       "_theme.DuCJPjK3.chunk.js",
-      "_Value.CDUl08nj.chunk.js",
-      "_columns.6kt9eNCw.chunk.js",
-      "_DateSelect.Ci3SoiyB.chunk.js",
-      "_useLocalPref.BfiFHNlc.chunk.js",
-      "_TransactionList.BDI6oGRs.chunk.js",
+      "_Value.BhHFGfMq.chunk.js",
+      "_columns.Bdu4ydYM.chunk.js",
+      "_DateSelect.CG4wZ9gi.chunk.js",
+      "_useLocalPref.btvh9sSL.chunk.js",
+      "_TransactionList.qZlP0qtx.chunk.js",
       "index.html",
-      "_bootstrapHyperFormula.CjAv6Bx8.chunk.js",
-      "_TransactionList.BUpHBm11.chunk.js",
-      "_NotesTagFormatter.DS19RSyk.chunk.js"
+      "_bootstrapHyperFormula.B4I2fer4.chunk.js",
+      "_TransactionList.Cfye8kdU.chunk.js",
+      "_NotesTagFormatter.BqPvF1Sz.chunk.js"
     ],
     "dynamicImports": [
       "src/components/formula/FormulaEditor.tsx"
@@ -691,52 +691,52 @@
     ]
   },
   "src/components/responsive/narrow.ts": {
-    "file": "static/js/narrow.Cu0VRsQe.chunk.js",
+    "file": "static/js/narrow.H3zMtw3x.chunk.js",
     "name": "narrow",
     "src": "src/components/responsive/narrow.ts",
     "isDynamicEntry": true,
     "imports": [
       "_rolldown-runtime.Co92CJQJ.chunk.js",
-      "_months.D0iuYo1J.chunk.js",
+      "_months.Bylr3Hev.chunk.js",
       "_theme.DuCJPjK3.chunk.js",
-      "_Value.CDUl08nj.chunk.js",
-      "_DateSelect.Ci3SoiyB.chunk.js",
-      "_useLocalPref.BfiFHNlc.chunk.js",
-      "_TransactionList.BDI6oGRs.chunk.js",
+      "_Value.BhHFGfMq.chunk.js",
+      "_DateSelect.CG4wZ9gi.chunk.js",
+      "_useLocalPref.btvh9sSL.chunk.js",
+      "_TransactionList.qZlP0qtx.chunk.js",
       "index.html",
-      "_NotesTagFormatter.DS19RSyk.chunk.js",
-      "_AutomaticSyncSettings.DwrndTGx.chunk.js"
+      "_NotesTagFormatter.BqPvF1Sz.chunk.js",
+      "_AutomaticSyncSettings.Ba6-ODW4.chunk.js"
     ]
   },
   "src/components/responsive/wide.ts": {
-    "file": "static/js/wide.CHxkPX7t.chunk.js",
+    "file": "static/js/wide.B07t4Sp3.chunk.js",
     "name": "wide",
     "src": "src/components/responsive/wide.ts",
     "isDynamicEntry": true,
     "imports": [
       "_rolldown-runtime.Co92CJQJ.chunk.js",
-      "_months.D0iuYo1J.chunk.js",
+      "_months.Bylr3Hev.chunk.js",
       "_theme.DuCJPjK3.chunk.js",
-      "_Value.CDUl08nj.chunk.js",
-      "_columns.6kt9eNCw.chunk.js",
-      "_DateSelect.Ci3SoiyB.chunk.js",
-      "_useLocalPref.BfiFHNlc.chunk.js",
+      "_Value.BhHFGfMq.chunk.js",
+      "_columns.Bdu4ydYM.chunk.js",
+      "_DateSelect.CG4wZ9gi.chunk.js",
+      "_useLocalPref.btvh9sSL.chunk.js",
       "index.html",
-      "_TransactionList.BUpHBm11.chunk.js",
-      "_NotesTagFormatter.DS19RSyk.chunk.js",
-      "_AutomaticSyncSettings.DwrndTGx.chunk.js"
+      "_TransactionList.Cfye8kdU.chunk.js",
+      "_NotesTagFormatter.BqPvF1Sz.chunk.js",
+      "_AutomaticSyncSettings.Ba6-ODW4.chunk.js"
     ]
   },
   "src/components/tour/TourHost.ts": {
-    "file": "static/js/TourHost.DXh9zk9A.chunk.js",
+    "file": "static/js/TourHost.DIBKTpnj.chunk.js",
     "name": "TourHost",
     "src": "src/components/tour/TourHost.ts",
     "isDynamicEntry": true,
     "imports": [
       "_rolldown-runtime.Co92CJQJ.chunk.js",
-      "_months.D0iuYo1J.chunk.js",
+      "_months.Bylr3Hev.chunk.js",
       "_theme.DuCJPjK3.chunk.js",
-      "_useLocalPref.BfiFHNlc.chunk.js",
+      "_useLocalPref.btvh9sSL.chunk.js",
       "index.html"
     ]
   }
