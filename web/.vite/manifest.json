@@ -1,0 +1,743 @@
+{
+  "../../node_modules/@capacitor/app/dist/esm/web.js": {
+    "file": "static/js/web.aZnQ6Sf_.chunk.js",
+    "name": "web",
+    "src": "../../node_modules/@capacitor/app/dist/esm/web.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html"
+    ]
+  },
+  "../../node_modules/@capacitor/haptics/dist/esm/web.js": {
+    "file": "static/js/web.52oqsu3k.chunk.js",
+    "name": "web",
+    "src": "../../node_modules/@capacitor/haptics/dist/esm/web.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html"
+    ]
+  },
+  "../../node_modules/@fontsource-variable/inter/files/inter-cyrillic-ext-wght-italic.woff2": {
+    "file": "static/media/inter-cyrillic-ext-wght-italic.B5xAaiFk.woff2",
+    "src": "../../node_modules/@fontsource-variable/inter/files/inter-cyrillic-ext-wght-italic.woff2"
+  },
+  "../../node_modules/@fontsource-variable/inter/files/inter-cyrillic-ext-wght-normal.woff2": {
+    "file": "static/media/inter-cyrillic-ext-wght-normal.BOeWTOD4.woff2",
+    "src": "../../node_modules/@fontsource-variable/inter/files/inter-cyrillic-ext-wght-normal.woff2"
+  },
+  "../../node_modules/@fontsource-variable/inter/files/inter-cyrillic-wght-italic.woff2": {
+    "file": "static/media/inter-cyrillic-wght-italic.DzZdc28x.woff2",
+    "src": "../../node_modules/@fontsource-variable/inter/files/inter-cyrillic-wght-italic.woff2"
+  },
+  "../../node_modules/@fontsource-variable/inter/files/inter-cyrillic-wght-normal.woff2": {
+    "file": "static/media/inter-cyrillic-wght-normal.DqGufNeO.woff2",
+    "src": "../../node_modules/@fontsource-variable/inter/files/inter-cyrillic-wght-normal.woff2"
+  },
+  "../../node_modules/@fontsource-variable/inter/files/inter-greek-ext-wght-italic.woff2": {
+    "file": "static/media/inter-greek-ext-wght-italic.DcOpz6Lw.woff2",
+    "src": "../../node_modules/@fontsource-variable/inter/files/inter-greek-ext-wght-italic.woff2"
+  },
+  "../../node_modules/@fontsource-variable/inter/files/inter-greek-ext-wght-normal.woff2": {
+    "file": "static/media/inter-greek-ext-wght-normal.DlzME5K_.woff2",
+    "src": "../../node_modules/@fontsource-variable/inter/files/inter-greek-ext-wght-normal.woff2"
+  },
+  "../../node_modules/@fontsource-variable/inter/files/inter-greek-wght-italic.woff2": {
+    "file": "static/media/inter-greek-wght-italic.CILZdfAp.woff2",
+    "src": "../../node_modules/@fontsource-variable/inter/files/inter-greek-wght-italic.woff2"
+  },
+  "../../node_modules/@fontsource-variable/inter/files/inter-greek-wght-normal.woff2": {
+    "file": "static/media/inter-greek-wght-normal.CkhJZR-_.woff2",
+    "src": "../../node_modules/@fontsource-variable/inter/files/inter-greek-wght-normal.woff2"
+  },
+  "../../node_modules/@fontsource-variable/inter/files/inter-latin-ext-wght-italic.woff2": {
+    "file": "static/media/inter-latin-ext-wght-italic.0pjOp8NU.woff2",
+    "src": "../../node_modules/@fontsource-variable/inter/files/inter-latin-ext-wght-italic.woff2"
+  },
+  "../../node_modules/@fontsource-variable/inter/files/inter-latin-ext-wght-normal.woff2": {
+    "file": "static/media/inter-latin-ext-wght-normal.DO1Apj_S.woff2",
+    "src": "../../node_modules/@fontsource-variable/inter/files/inter-latin-ext-wght-normal.woff2"
+  },
+  "../../node_modules/@fontsource-variable/inter/files/inter-latin-wght-italic.woff2": {
+    "file": "static/media/inter-latin-wght-italic.DpCbqKDY.woff2",
+    "src": "../../node_modules/@fontsource-variable/inter/files/inter-latin-wght-italic.woff2"
+  },
+  "../../node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2": {
+    "file": "static/media/inter-latin-wght-normal.Dx4kXJAl.woff2",
+    "src": "../../node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2"
+  },
+  "../../node_modules/@fontsource-variable/inter/files/inter-vietnamese-wght-italic.woff2": {
+    "file": "static/media/inter-vietnamese-wght-italic.K3WlGtc8.woff2",
+    "src": "../../node_modules/@fontsource-variable/inter/files/inter-vietnamese-wght-italic.woff2"
+  },
+  "../../node_modules/@fontsource-variable/inter/files/inter-vietnamese-wght-normal.woff2": {
+    "file": "static/media/inter-vietnamese-wght-normal.CBcvBZtf.woff2",
+    "src": "../../node_modules/@fontsource-variable/inter/files/inter-vietnamese-wght-normal.woff2"
+  },
+  "../../node_modules/@fontsource/redacted-script/files/redacted-script-latin-400-normal.woff": {
+    "file": "static/media/redacted-script-latin-400-normal.DH5Ip5Nv.woff",
+    "src": "../../node_modules/@fontsource/redacted-script/files/redacted-script-latin-400-normal.woff"
+  },
+  "../../node_modules/@fontsource/redacted-script/files/redacted-script-latin-400-normal.woff2": {
+    "file": "static/media/redacted-script-latin-400-normal.DO_NTpDN.woff2",
+    "src": "../../node_modules/@fontsource/redacted-script/files/redacted-script-latin-400-normal.woff2"
+  },
+  "../../node_modules/@fontsource/redacted-script/files/redacted-script-latin-ext-400-normal.woff": {
+    "file": "static/media/redacted-script-latin-ext-400-normal.COdB0Snm.woff",
+    "src": "../../node_modules/@fontsource/redacted-script/files/redacted-script-latin-ext-400-normal.woff"
+  },
+  "../../node_modules/@fontsource/redacted-script/files/redacted-script-latin-ext-400-normal.woff2": {
+    "file": "static/media/redacted-script-latin-ext-400-normal.BsF1F2G5.woff2",
+    "src": "../../node_modules/@fontsource/redacted-script/files/redacted-script-latin-ext-400-normal.woff2"
+  },
+  "../../node_modules/absurd-sql/dist/indexeddb-main-thread-worker-e59fee74.js": {
+    "file": "static/js/indexeddb-main-thread-worker-e59fee74.B9D89_PE.chunk.js",
+    "name": "indexeddb-main-thread-worker-e59fee74",
+    "src": "../../node_modules/absurd-sql/dist/indexeddb-main-thread-worker-e59fee74.js",
+    "isDynamicEntry": true
+  },
+  "../../node_modules/workbox-window/build/workbox-window.prod.es5.mjs": {
+    "file": "static/js/workbox-window.prod.es5.D5AzH0Wa.chunk.js",
+    "name": "workbox-window.prod.es5",
+    "src": "../../node_modules/workbox-window/build/workbox-window.prod.es5.mjs",
+    "isDynamicEntry": true
+  },
+  "_AutomaticSyncSettings.B0PSJfpF.chunk.js": {
+    "file": "static/js/AutomaticSyncSettings.B0PSJfpF.chunk.js",
+    "name": "AutomaticSyncSettings",
+    "imports": [
+      "_rolldown-runtime.Co92CJQJ.chunk.js",
+      "_months.D0iuYo1J.chunk.js",
+      "_theme.DuCJPjK3.chunk.js",
+      "_Value.EltcgFxW.chunk.js",
+      "_DateSelect.WN9qr5Bf.chunk.js",
+      "index.html"
+    ]
+  },
+  "_DateSelect.WN9qr5Bf.chunk.js": {
+    "file": "static/js/DateSelect.WN9qr5Bf.chunk.js",
+    "name": "DateSelect",
+    "imports": [
+      "_rolldown-runtime.Co92CJQJ.chunk.js",
+      "_months.D0iuYo1J.chunk.js",
+      "_theme.DuCJPjK3.chunk.js"
+    ]
+  },
+  "_NotesTagFormatter.Cb2Fxh8w.chunk.js": {
+    "file": "static/js/NotesTagFormatter.Cb2Fxh8w.chunk.js",
+    "name": "NotesTagFormatter",
+    "imports": [
+      "_rolldown-runtime.Co92CJQJ.chunk.js",
+      "_months.D0iuYo1J.chunk.js",
+      "_theme.DuCJPjK3.chunk.js",
+      "_Value.EltcgFxW.chunk.js",
+      "_useLocalPref.BfiFHNlc.chunk.js"
+    ]
+  },
+  "_TransactionList.9ed7mTfW.chunk.js": {
+    "file": "static/js/TransactionList.9ed7mTfW.chunk.js",
+    "name": "TransactionList",
+    "imports": [
+      "_rolldown-runtime.Co92CJQJ.chunk.js",
+      "_months.D0iuYo1J.chunk.js",
+      "_theme.DuCJPjK3.chunk.js",
+      "_Value.EltcgFxW.chunk.js",
+      "_columns.CE2qHVQs.chunk.js",
+      "_DateSelect.WN9qr5Bf.chunk.js",
+      "_useLocalPref.BfiFHNlc.chunk.js",
+      "_NotesTagFormatter.Cb2Fxh8w.chunk.js"
+    ]
+  },
+  "_TransactionList.kzw94m4_.chunk.js": {
+    "file": "static/js/TransactionList.kzw94m4_.chunk.js",
+    "name": "TransactionList",
+    "imports": [
+      "_rolldown-runtime.Co92CJQJ.chunk.js",
+      "_months.D0iuYo1J.chunk.js",
+      "_theme.DuCJPjK3.chunk.js",
+      "_Value.EltcgFxW.chunk.js",
+      "_DateSelect.WN9qr5Bf.chunk.js",
+      "_useLocalPref.BfiFHNlc.chunk.js",
+      "index.html",
+      "_NotesTagFormatter.Cb2Fxh8w.chunk.js"
+    ]
+  },
+  "_Value.EltcgFxW.chunk.js": {
+    "file": "static/js/Value.EltcgFxW.chunk.js",
+    "name": "Value",
+    "imports": [
+      "_rolldown-runtime.Co92CJQJ.chunk.js",
+      "_build-shims.CVsLiQAy.chunk.js",
+      "_months.D0iuYo1J.chunk.js",
+      "_theme.DuCJPjK3.chunk.js",
+      "_DateSelect.WN9qr5Bf.chunk.js",
+      "_useLocalPref.BfiFHNlc.chunk.js"
+    ],
+    "dynamicImports": [
+      "src/components/formula/FormulaEditor.tsx"
+    ]
+  },
+  "_bootstrapHyperFormula.CD7k4JOG.chunk.js": {
+    "file": "static/js/bootstrapHyperFormula.CD7k4JOG.chunk.js",
+    "name": "bootstrapHyperFormula",
+    "imports": [
+      "_DateSelect.WN9qr5Bf.chunk.js"
+    ]
+  },
+  "_build-shims.CVsLiQAy.chunk.js": {
+    "file": "static/js/build-shims.CVsLiQAy.chunk.js",
+    "name": "build-shims",
+    "imports": [
+      "_rolldown-runtime.Co92CJQJ.chunk.js"
+    ]
+  },
+  "_columns.CE2qHVQs.chunk.js": {
+    "file": "static/js/columns.CE2qHVQs.chunk.js",
+    "name": "columns",
+    "imports": [
+      "_rolldown-runtime.Co92CJQJ.chunk.js",
+      "_build-shims.CVsLiQAy.chunk.js",
+      "_months.D0iuYo1J.chunk.js",
+      "_theme.DuCJPjK3.chunk.js",
+      "_Value.EltcgFxW.chunk.js",
+      "_useLocalPref.BfiFHNlc.chunk.js"
+    ]
+  },
+  "_months.D0iuYo1J.chunk.js": {
+    "file": "static/js/months.D0iuYo1J.chunk.js",
+    "name": "months",
+    "imports": [
+      "_rolldown-runtime.Co92CJQJ.chunk.js",
+      "_build-shims.CVsLiQAy.chunk.js",
+      "_theme.DuCJPjK3.chunk.js"
+    ],
+    "dynamicImports": [
+      "locale/af.json",
+      "locale/aii.json",
+      "locale/ar.json",
+      "locale/ars.json",
+      "locale/be.json",
+      "locale/bg.json",
+      "locale/bn.json",
+      "locale/ca.json",
+      "locale/cs.json",
+      "locale/da.json",
+      "locale/de.json",
+      "locale/el.json",
+      "locale/en-GB.json",
+      "locale/en.json",
+      "locale/eo.json",
+      "locale/es.json",
+      "locale/et.json",
+      "locale/fa.json",
+      "locale/fi.json",
+      "locale/fil.json",
+      "locale/fr-CA.json",
+      "locale/fr.json",
+      "locale/gl.json",
+      "locale/he.json",
+      "locale/hi.json",
+      "locale/hu.json",
+      "locale/id.json",
+      "locale/it.json",
+      "locale/ja.json",
+      "locale/ko.json",
+      "locale/lt.json",
+      "locale/nb-NO.json",
+      "locale/nl.json",
+      "locale/pl.json",
+      "locale/pt-BR.json",
+      "locale/pt.json",
+      "locale/ro.json",
+      "locale/ru.json",
+      "locale/sk.json",
+      "locale/sl.json",
+      "locale/sq.json",
+      "locale/sr.json",
+      "locale/sv.json",
+      "locale/ta.json",
+      "locale/th.json",
+      "locale/tr.json",
+      "locale/uk.json",
+      "locale/vi.json",
+      "locale/zh-Hans.json",
+      "locale/zh-Hant.json"
+    ]
+  },
+  "_rolldown-runtime.Co92CJQJ.chunk.js": {
+    "file": "static/js/rolldown-runtime.Co92CJQJ.chunk.js",
+    "name": "rolldown-runtime"
+  },
+  "_theme.DuCJPjK3.chunk.js": {
+    "file": "static/js/theme.DuCJPjK3.chunk.js",
+    "name": "theme",
+    "imports": [
+      "_rolldown-runtime.Co92CJQJ.chunk.js"
+    ]
+  },
+  "_useLocalPref.BfiFHNlc.chunk.js": {
+    "file": "static/js/useLocalPref.BfiFHNlc.chunk.js",
+    "name": "useLocalPref",
+    "imports": [
+      "_rolldown-runtime.Co92CJQJ.chunk.js",
+      "_months.D0iuYo1J.chunk.js",
+      "_theme.DuCJPjK3.chunk.js"
+    ]
+  },
+  "index.html": {
+    "file": "static/js/index.nLz3UQ2C.js",
+    "name": "index",
+    "src": "index.html",
+    "isEntry": true,
+    "imports": [
+      "_rolldown-runtime.Co92CJQJ.chunk.js",
+      "_build-shims.CVsLiQAy.chunk.js",
+      "_months.D0iuYo1J.chunk.js",
+      "_theme.DuCJPjK3.chunk.js",
+      "_Value.EltcgFxW.chunk.js",
+      "_columns.CE2qHVQs.chunk.js",
+      "_DateSelect.WN9qr5Bf.chunk.js",
+      "_useLocalPref.BfiFHNlc.chunk.js"
+    ],
+    "dynamicImports": [
+      "../../node_modules/absurd-sql/dist/indexeddb-main-thread-worker-e59fee74.js",
+      "../../node_modules/workbox-window/build/workbox-window.prod.es5.mjs",
+      "../../node_modules/@capacitor/app/dist/esm/web.js",
+      "src/components/BackgroundImage.tsx",
+      "../../node_modules/@capacitor/haptics/dist/esm/web.js",
+      "src/components/reports/ReportRouter.tsx",
+      "src/components/responsive/narrow.ts",
+      "src/components/responsive/wide.ts",
+      "src/components/tour/TourHost.ts"
+    ],
+    "css": [
+      "static/css/index.DaMJyE_v.css"
+    ],
+    "assets": [
+      "static/shared-browser-server-BsEYWBps.js",
+      "static/js/browser-server.B7uQSbLt.js",
+      "static/media/redacted-script-latin-ext-400-normal.BsF1F2G5.woff2",
+      "static/media/redacted-script-latin-ext-400-normal.COdB0Snm.woff",
+      "static/media/redacted-script-latin-400-normal.DO_NTpDN.woff2",
+      "static/media/redacted-script-latin-400-normal.DH5Ip5Nv.woff",
+      "static/media/inter-cyrillic-ext-wght-normal.BOeWTOD4.woff2",
+      "static/media/inter-cyrillic-wght-normal.DqGufNeO.woff2",
+      "static/media/inter-greek-ext-wght-normal.DlzME5K_.woff2",
+      "static/media/inter-greek-wght-normal.CkhJZR-_.woff2",
+      "static/media/inter-vietnamese-wght-normal.CBcvBZtf.woff2",
+      "static/media/inter-latin-ext-wght-normal.DO1Apj_S.woff2",
+      "static/media/inter-latin-wght-normal.Dx4kXJAl.woff2",
+      "static/media/inter-cyrillic-ext-wght-italic.B5xAaiFk.woff2",
+      "static/media/inter-cyrillic-wght-italic.DzZdc28x.woff2",
+      "static/media/inter-greek-ext-wght-italic.DcOpz6Lw.woff2",
+      "static/media/inter-greek-wght-italic.CILZdfAp.woff2",
+      "static/media/inter-vietnamese-wght-italic.K3WlGtc8.woff2",
+      "static/media/inter-latin-ext-wght-italic.0pjOp8NU.woff2",
+      "static/media/inter-latin-wght-italic.DpCbqKDY.woff2"
+    ]
+  },
+  "locale/af.json": {
+    "file": "static/js/af.D2S_vF8w.chunk.js",
+    "name": "af",
+    "src": "locale/af.json",
+    "isDynamicEntry": true
+  },
+  "locale/aii.json": {
+    "file": "static/js/aii.CBiGmlSp.chunk.js",
+    "name": "aii",
+    "src": "locale/aii.json",
+    "isDynamicEntry": true
+  },
+  "locale/ar.json": {
+    "file": "static/js/ar.DHrhq9lJ.chunk.js",
+    "name": "ar",
+    "src": "locale/ar.json",
+    "isDynamicEntry": true
+  },
+  "locale/ars.json": {
+    "file": "static/js/ars.DKJ2Ea1a.chunk.js",
+    "name": "ars",
+    "src": "locale/ars.json",
+    "isDynamicEntry": true
+  },
+  "locale/be.json": {
+    "file": "static/js/be.C8rFTcgl.chunk.js",
+    "name": "be",
+    "src": "locale/be.json",
+    "isDynamicEntry": true
+  },
+  "locale/bg.json": {
+    "file": "static/js/bg.BVS9WAIz.chunk.js",
+    "name": "bg",
+    "src": "locale/bg.json",
+    "isDynamicEntry": true
+  },
+  "locale/bn.json": {
+    "file": "static/js/bn.9ewMCc_4.chunk.js",
+    "name": "bn",
+    "src": "locale/bn.json",
+    "isDynamicEntry": true
+  },
+  "locale/ca.json": {
+    "file": "static/js/ca.CmSowH3_.chunk.js",
+    "name": "ca",
+    "src": "locale/ca.json",
+    "isDynamicEntry": true
+  },
+  "locale/cs.json": {
+    "file": "static/js/cs.BEl_wnEn.chunk.js",
+    "name": "cs",
+    "src": "locale/cs.json",
+    "isDynamicEntry": true
+  },
+  "locale/da.json": {
+    "file": "static/js/da.Dy-lg0As.chunk.js",
+    "name": "da",
+    "src": "locale/da.json",
+    "isDynamicEntry": true
+  },
+  "locale/de.json": {
+    "file": "static/js/de.BKqCR3YP.chunk.js",
+    "name": "de",
+    "src": "locale/de.json",
+    "isDynamicEntry": true
+  },
+  "locale/el.json": {
+    "file": "static/js/el.XiWsCLhi.chunk.js",
+    "name": "el",
+    "src": "locale/el.json",
+    "isDynamicEntry": true
+  },
+  "locale/en-GB.json": {
+    "file": "static/js/en-GB.B_HIp-47.chunk.js",
+    "name": "en-GB",
+    "src": "locale/en-GB.json",
+    "isDynamicEntry": true
+  },
+  "locale/en.json": {
+    "file": "static/js/en.D6Gu9OW8.chunk.js",
+    "name": "en",
+    "src": "locale/en.json",
+    "isDynamicEntry": true
+  },
+  "locale/eo.json": {
+    "file": "static/js/eo.D8RFVyGn.chunk.js",
+    "name": "eo",
+    "src": "locale/eo.json",
+    "isDynamicEntry": true
+  },
+  "locale/es.json": {
+    "file": "static/js/es.58jT8WrE.chunk.js",
+    "name": "es",
+    "src": "locale/es.json",
+    "isDynamicEntry": true
+  },
+  "locale/et.json": {
+    "file": "static/js/et.B3dUvJ-4.chunk.js",
+    "name": "et",
+    "src": "locale/et.json",
+    "isDynamicEntry": true
+  },
+  "locale/fa.json": {
+    "file": "static/js/fa.FQ0WXvgN.chunk.js",
+    "name": "fa",
+    "src": "locale/fa.json",
+    "isDynamicEntry": true
+  },
+  "locale/fi.json": {
+    "file": "static/js/fi.CO8SIM3O.chunk.js",
+    "name": "fi",
+    "src": "locale/fi.json",
+    "isDynamicEntry": true
+  },
+  "locale/fil.json": {
+    "file": "static/js/fil.CrskgPW-.chunk.js",
+    "name": "fil",
+    "src": "locale/fil.json",
+    "isDynamicEntry": true
+  },
+  "locale/fr-CA.json": {
+    "file": "static/js/fr-CA.BGKeINso.chunk.js",
+    "name": "fr-CA",
+    "src": "locale/fr-CA.json",
+    "isDynamicEntry": true
+  },
+  "locale/fr.json": {
+    "file": "static/js/fr.CAA9JT1T.chunk.js",
+    "name": "fr",
+    "src": "locale/fr.json",
+    "isDynamicEntry": true
+  },
+  "locale/gl.json": {
+    "file": "static/js/gl.B06jYgB-.chunk.js",
+    "name": "gl",
+    "src": "locale/gl.json",
+    "isDynamicEntry": true
+  },
+  "locale/he.json": {
+    "file": "static/js/he.CycSi9H-.chunk.js",
+    "name": "he",
+    "src": "locale/he.json",
+    "isDynamicEntry": true
+  },
+  "locale/hi.json": {
+    "file": "static/js/hi.C6BkMc1b.chunk.js",
+    "name": "hi",
+    "src": "locale/hi.json",
+    "isDynamicEntry": true
+  },
+  "locale/hu.json": {
+    "file": "static/js/hu.CFT6fYiE.chunk.js",
+    "name": "hu",
+    "src": "locale/hu.json",
+    "isDynamicEntry": true
+  },
+  "locale/id.json": {
+    "file": "static/js/id.kczTXuAD.chunk.js",
+    "name": "id",
+    "src": "locale/id.json",
+    "isDynamicEntry": true
+  },
+  "locale/it.json": {
+    "file": "static/js/it.DYR0kM2U.chunk.js",
+    "name": "it",
+    "src": "locale/it.json",
+    "isDynamicEntry": true
+  },
+  "locale/ja.json": {
+    "file": "static/js/ja.DQ3cf6hv.chunk.js",
+    "name": "ja",
+    "src": "locale/ja.json",
+    "isDynamicEntry": true
+  },
+  "locale/ko.json": {
+    "file": "static/js/ko.EESAg6PY.chunk.js",
+    "name": "ko",
+    "src": "locale/ko.json",
+    "isDynamicEntry": true
+  },
+  "locale/lt.json": {
+    "file": "static/js/lt.BuPrWEcB.chunk.js",
+    "name": "lt",
+    "src": "locale/lt.json",
+    "isDynamicEntry": true
+  },
+  "locale/nb-NO.json": {
+    "file": "static/js/nb-NO.CU88fil0.chunk.js",
+    "name": "nb-NO",
+    "src": "locale/nb-NO.json",
+    "isDynamicEntry": true
+  },
+  "locale/nl.json": {
+    "file": "static/js/nl.Ds0zaVrK.chunk.js",
+    "name": "nl",
+    "src": "locale/nl.json",
+    "isDynamicEntry": true
+  },
+  "locale/pl.json": {
+    "file": "static/js/pl.DumX9sIp.chunk.js",
+    "name": "pl",
+    "src": "locale/pl.json",
+    "isDynamicEntry": true
+  },
+  "locale/pt-BR.json": {
+    "file": "static/js/pt-BR.BKbNVeOy.chunk.js",
+    "name": "pt-BR",
+    "src": "locale/pt-BR.json",
+    "isDynamicEntry": true
+  },
+  "locale/pt.json": {
+    "file": "static/js/pt.C9NucLt9.chunk.js",
+    "name": "pt",
+    "src": "locale/pt.json",
+    "isDynamicEntry": true
+  },
+  "locale/ro.json": {
+    "file": "static/js/ro.BtTUpQHv.chunk.js",
+    "name": "ro",
+    "src": "locale/ro.json",
+    "isDynamicEntry": true
+  },
+  "locale/ru.json": {
+    "file": "static/js/ru.D-U0iC7o.chunk.js",
+    "name": "ru",
+    "src": "locale/ru.json",
+    "isDynamicEntry": true
+  },
+  "locale/sk.json": {
+    "file": "static/js/sk.B1RmcxRI.chunk.js",
+    "name": "sk",
+    "src": "locale/sk.json",
+    "isDynamicEntry": true
+  },
+  "locale/sl.json": {
+    "file": "static/js/sl.BRvPE3As.chunk.js",
+    "name": "sl",
+    "src": "locale/sl.json",
+    "isDynamicEntry": true
+  },
+  "locale/sq.json": {
+    "file": "static/js/sq.dpireMNr.chunk.js",
+    "name": "sq",
+    "src": "locale/sq.json",
+    "isDynamicEntry": true
+  },
+  "locale/sr.json": {
+    "file": "static/js/sr.CsNUugvC.chunk.js",
+    "name": "sr",
+    "src": "locale/sr.json",
+    "isDynamicEntry": true
+  },
+  "locale/sv.json": {
+    "file": "static/js/sv.7Da44hsb.chunk.js",
+    "name": "sv",
+    "src": "locale/sv.json",
+    "isDynamicEntry": true
+  },
+  "locale/ta.json": {
+    "file": "static/js/ta.B_ykneR-.chunk.js",
+    "name": "ta",
+    "src": "locale/ta.json",
+    "isDynamicEntry": true
+  },
+  "locale/th.json": {
+    "file": "static/js/th.Cx3ZKo-3.chunk.js",
+    "name": "th",
+    "src": "locale/th.json",
+    "isDynamicEntry": true
+  },
+  "locale/tr.json": {
+    "file": "static/js/tr.BKPQCuj2.chunk.js",
+    "name": "tr",
+    "src": "locale/tr.json",
+    "isDynamicEntry": true
+  },
+  "locale/uk.json": {
+    "file": "static/js/uk.DP40WT0a.chunk.js",
+    "name": "uk",
+    "src": "locale/uk.json",
+    "isDynamicEntry": true
+  },
+  "locale/vi.json": {
+    "file": "static/js/vi.CcXtDrsu.chunk.js",
+    "name": "vi",
+    "src": "locale/vi.json",
+    "isDynamicEntry": true
+  },
+  "locale/zh-Hans.json": {
+    "file": "static/js/zh-Hans.Ctlh1jIz.chunk.js",
+    "name": "zh-Hans",
+    "src": "locale/zh-Hans.json",
+    "isDynamicEntry": true
+  },
+  "locale/zh-Hant.json": {
+    "file": "static/js/zh-Hant.wTS2OZ-Y.chunk.js",
+    "name": "zh-Hant",
+    "src": "locale/zh-Hant.json",
+    "isDynamicEntry": true
+  },
+  "src/browser-server.js": {
+    "file": "static/js/browser-server.B7uQSbLt.js",
+    "src": "src/browser-server.js"
+  },
+  "src/components/BackgroundImage.tsx": {
+    "file": "static/js/BackgroundImage.BenCIBlG.chunk.js",
+    "name": "BackgroundImage",
+    "src": "src/components/BackgroundImage.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_rolldown-runtime.Co92CJQJ.chunk.js",
+      "_theme.DuCJPjK3.chunk.js"
+    ]
+  },
+  "src/components/formula/FormulaEditor.tsx": {
+    "file": "static/js/FormulaEditor.BVs2Yz_4.chunk.js",
+    "name": "FormulaEditor",
+    "src": "src/components/formula/FormulaEditor.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_rolldown-runtime.Co92CJQJ.chunk.js",
+      "_months.D0iuYo1J.chunk.js",
+      "_theme.DuCJPjK3.chunk.js",
+      "_DateSelect.WN9qr5Bf.chunk.js",
+      "index.html",
+      "_bootstrapHyperFormula.CD7k4JOG.chunk.js"
+    ]
+  },
+  "src/components/reports/ReportRouter.tsx": {
+    "file": "static/js/ReportRouter.Cbji7lEI.chunk.js",
+    "name": "ReportRouter",
+    "src": "src/components/reports/ReportRouter.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_rolldown-runtime.Co92CJQJ.chunk.js",
+      "_build-shims.CVsLiQAy.chunk.js",
+      "_months.D0iuYo1J.chunk.js",
+      "_theme.DuCJPjK3.chunk.js",
+      "_Value.EltcgFxW.chunk.js",
+      "_columns.CE2qHVQs.chunk.js",
+      "_DateSelect.WN9qr5Bf.chunk.js",
+      "_useLocalPref.BfiFHNlc.chunk.js",
+      "_TransactionList.kzw94m4_.chunk.js",
+      "index.html",
+      "_bootstrapHyperFormula.CD7k4JOG.chunk.js",
+      "_TransactionList.9ed7mTfW.chunk.js",
+      "_NotesTagFormatter.Cb2Fxh8w.chunk.js"
+    ],
+    "dynamicImports": [
+      "src/components/formula/FormulaEditor.tsx"
+    ],
+    "css": [
+      "static/css/ReportRouter.Dly3Bzm_.css"
+    ]
+  },
+  "src/components/responsive/narrow.ts": {
+    "file": "static/js/narrow.CtHG0CgB.chunk.js",
+    "name": "narrow",
+    "src": "src/components/responsive/narrow.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_rolldown-runtime.Co92CJQJ.chunk.js",
+      "_months.D0iuYo1J.chunk.js",
+      "_theme.DuCJPjK3.chunk.js",
+      "_Value.EltcgFxW.chunk.js",
+      "_DateSelect.WN9qr5Bf.chunk.js",
+      "_useLocalPref.BfiFHNlc.chunk.js",
+      "_TransactionList.kzw94m4_.chunk.js",
+      "index.html",
+      "_NotesTagFormatter.Cb2Fxh8w.chunk.js",
+      "_AutomaticSyncSettings.B0PSJfpF.chunk.js"
+    ]
+  },
+  "src/components/responsive/wide.ts": {
+    "file": "static/js/wide.C5JGCJY5.chunk.js",
+    "name": "wide",
+    "src": "src/components/responsive/wide.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_rolldown-runtime.Co92CJQJ.chunk.js",
+      "_months.D0iuYo1J.chunk.js",
+      "_theme.DuCJPjK3.chunk.js",
+      "_Value.EltcgFxW.chunk.js",
+      "_columns.CE2qHVQs.chunk.js",
+      "_DateSelect.WN9qr5Bf.chunk.js",
+      "_useLocalPref.BfiFHNlc.chunk.js",
+      "index.html",
+      "_TransactionList.9ed7mTfW.chunk.js",
+      "_NotesTagFormatter.Cb2Fxh8w.chunk.js",
+      "_AutomaticSyncSettings.B0PSJfpF.chunk.js"
+    ]
+  },
+  "src/components/tour/TourHost.ts": {
+    "file": "static/js/TourHost.7OYTioaX.chunk.js",
+    "name": "TourHost",
+    "src": "src/components/tour/TourHost.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_rolldown-runtime.Co92CJQJ.chunk.js",
+      "_months.D0iuYo1J.chunk.js",
+      "_theme.DuCJPjK3.chunk.js",
+      "_useLocalPref.BfiFHNlc.chunk.js",
+      "index.html"
+    ]
+  }
+}

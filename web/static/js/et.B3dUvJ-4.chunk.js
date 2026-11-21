@@ -1,0 +1,2 @@
+var et_default={"(after weekend)":`(peale nädalavahetust)`,"(before weekend)":`(enne nädalavahetust)`,"(deleted)":`(kustutatud)`,"(hidden)":`(peidetud)`,"(modified)":`(muudetud)`,"(No payee)":`(Pole makse saajat)`,"(none)":`(pole)`,"(nothing)":`(mitte midagi)`};export{et_default as default};
+//# sourceMappingURL=et.B3dUvJ-4.chunk.js.map

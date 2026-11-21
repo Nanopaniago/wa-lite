@@ -1,0 +1,2 @@
+var ro_default={"(after weekend)":`(dupa weekend)`,"(deleted)":`(șters)`,"(hidden)":`(ascuns)`,"(modified)":`(modificat)`,"(nothing)":`(nimic)`,"(Optional)":`(Opțional)`,"(before weekend)":`(înainte de weekend)`,"(No payee)":`(Fără beneficiar)`};export{ro_default as default};
+//# sourceMappingURL=ro.BtTUpQHv.chunk.js.map

@@ -1,0 +1,2 @@
+import{n as __esmMin}from"./rolldown-runtime.Co92CJQJ.chunk.js";var global,init_build_shims=__esmMin((()=>{global=globalThis||self}));export{init_build_shims as n,global as t};
+//# sourceMappingURL=build-shims.CVsLiQAy.chunk.js.map
