@@ -1,20 +1,21 @@
 {
   "../../node_modules/@capacitor/app/dist/esm/web.js": {
-    "file": "static/js/web.Dwd3v789.chunk.js",
+    "file": "static/js/web.CG0e8xBu.chunk.js",
     "name": "web",
     "src": "../../node_modules/@capacitor/app/dist/esm/web.js",
     "isDynamicEntry": true,
     "imports": [
-      "index.html"
+      "_dist.GKYEOKKx.chunk.js"
     ]
   },
   "../../node_modules/@capacitor/haptics/dist/esm/web.js": {
-    "file": "static/js/web.DfDsk0Y4.chunk.js",
+    "file": "static/js/web.Bv453_SZ.chunk.js",
     "name": "web",
     "src": "../../node_modules/@capacitor/haptics/dist/esm/web.js",
     "isDynamicEntry": true,
     "imports": [
-      "index.html"
+      "_dist.GKYEOKKx.chunk.js",
+      "_definitions.W6WNFsFV.chunk.js"
     ]
   },
   "../../node_modules/@fontsource-variable/inter/files/inter-cyrillic-ext-wght-italic.woff2": {
@@ -101,86 +102,104 @@
     "src": "../../node_modules/workbox-window/build/workbox-window.prod.es5.mjs",
     "isDynamicEntry": true
   },
-  "_AutomaticSyncSettings.BpzSz4Ky.chunk.js": {
-    "file": "static/js/AutomaticSyncSettings.BpzSz4Ky.chunk.js",
+  "_AutomaticSyncSettings.DeFw0esv.chunk.js": {
+    "file": "static/js/AutomaticSyncSettings.DeFw0esv.chunk.js",
     "name": "AutomaticSyncSettings",
     "imports": [
       "_rolldown-runtime.Co92CJQJ.chunk.js",
-      "_months.BWXnGpdU.chunk.js",
+      "_useSyncedPref.CkUOc8pa.chunk.js",
       "_theme.DuCJPjK3.chunk.js",
-      "_Value.Cp6iFSn4.chunk.js",
-      "_DateSelect.D_MEmMoG.chunk.js",
+      "_Value.DBkRhjKA.chunk.js",
+      "_DateSelect.1W7L8CMG.chunk.js",
+      "_useLocalPref.Iyv8XTCp.chunk.js",
       "index.html"
     ]
   },
-  "_DateSelect.D_MEmMoG.chunk.js": {
-    "file": "static/js/DateSelect.D_MEmMoG.chunk.js",
+  "_DateSelect.1W7L8CMG.chunk.js": {
+    "file": "static/js/DateSelect.1W7L8CMG.chunk.js",
     "name": "DateSelect",
     "imports": [
       "_rolldown-runtime.Co92CJQJ.chunk.js",
-      "_months.BWXnGpdU.chunk.js",
+      "_useSyncedPref.CkUOc8pa.chunk.js",
       "_theme.DuCJPjK3.chunk.js"
     ]
   },
-  "_NotesTagFormatter.O7bkoYKt.chunk.js": {
-    "file": "static/js/NotesTagFormatter.O7bkoYKt.chunk.js",
+  "_NotesTagFormatter.CPN8Nj7C.chunk.js": {
+    "file": "static/js/NotesTagFormatter.CPN8Nj7C.chunk.js",
     "name": "NotesTagFormatter",
     "imports": [
       "_rolldown-runtime.Co92CJQJ.chunk.js",
-      "_months.BWXnGpdU.chunk.js",
+      "_useSyncedPref.CkUOc8pa.chunk.js",
       "_theme.DuCJPjK3.chunk.js",
-      "_Value.Cp6iFSn4.chunk.js",
-      "_useLocalPref.Cwo4jaE6.chunk.js"
+      "_Value.DBkRhjKA.chunk.js",
+      "_useLocalPref.Iyv8XTCp.chunk.js"
     ]
   },
-  "_TransactionList.3oG6hJlq.chunk.js": {
-    "file": "static/js/TransactionList.3oG6hJlq.chunk.js",
+  "_TransactionEdit.jYYiJtnM.chunk.js": {
+    "file": "static/js/TransactionEdit.jYYiJtnM.chunk.js",
+    "name": "TransactionEdit",
+    "imports": [
+      "_rolldown-runtime.Co92CJQJ.chunk.js",
+      "_useSyncedPref.CkUOc8pa.chunk.js",
+      "_theme.DuCJPjK3.chunk.js",
+      "_Value.DBkRhjKA.chunk.js",
+      "_DateSelect.1W7L8CMG.chunk.js",
+      "_dist.GKYEOKKx.chunk.js",
+      "_useLocalPref.Iyv8XTCp.chunk.js",
+      "_definitions.W6WNFsFV.chunk.js"
+    ],
+    "dynamicImports": [
+      "../../node_modules/@capacitor/haptics/dist/esm/web.js"
+    ]
+  },
+  "_TransactionList.BaO-MeeR.chunk.js": {
+    "file": "static/js/TransactionList.BaO-MeeR.chunk.js",
     "name": "TransactionList",
     "imports": [
       "_rolldown-runtime.Co92CJQJ.chunk.js",
-      "_months.BWXnGpdU.chunk.js",
+      "_useSyncedPref.CkUOc8pa.chunk.js",
       "_theme.DuCJPjK3.chunk.js",
-      "_Value.Cp6iFSn4.chunk.js",
-      "_columns.CdgO96kn.chunk.js",
-      "_DateSelect.D_MEmMoG.chunk.js",
-      "_useLocalPref.Cwo4jaE6.chunk.js",
-      "_NotesTagFormatter.O7bkoYKt.chunk.js"
+      "_Value.DBkRhjKA.chunk.js",
+      "_columns.CcTVBCFV.chunk.js",
+      "_DateSelect.1W7L8CMG.chunk.js",
+      "_useLocalPref.Iyv8XTCp.chunk.js",
+      "_NotesTagFormatter.CPN8Nj7C.chunk.js"
     ]
   },
-  "_TransactionList.Cg8Y4NnB.chunk.js": {
-    "file": "static/js/TransactionList.Cg8Y4NnB.chunk.js",
+  "_TransactionList.DE0SAyG0.chunk.js": {
+    "file": "static/js/TransactionList.DE0SAyG0.chunk.js",
     "name": "TransactionList",
     "imports": [
       "_rolldown-runtime.Co92CJQJ.chunk.js",
-      "_months.BWXnGpdU.chunk.js",
+      "_useSyncedPref.CkUOc8pa.chunk.js",
       "_theme.DuCJPjK3.chunk.js",
-      "_Value.Cp6iFSn4.chunk.js",
-      "_DateSelect.D_MEmMoG.chunk.js",
-      "_useLocalPref.Cwo4jaE6.chunk.js",
-      "index.html",
-      "_NotesTagFormatter.O7bkoYKt.chunk.js"
+      "_Value.DBkRhjKA.chunk.js",
+      "_DateSelect.1W7L8CMG.chunk.js",
+      "_useLocalPref.Iyv8XTCp.chunk.js",
+      "_TransactionEdit.jYYiJtnM.chunk.js",
+      "_NotesTagFormatter.CPN8Nj7C.chunk.js"
     ]
   },
-  "_Value.Cp6iFSn4.chunk.js": {
-    "file": "static/js/Value.Cp6iFSn4.chunk.js",
+  "_Value.DBkRhjKA.chunk.js": {
+    "file": "static/js/Value.DBkRhjKA.chunk.js",
     "name": "Value",
     "imports": [
       "_rolldown-runtime.Co92CJQJ.chunk.js",
       "_build-shims.CVsLiQAy.chunk.js",
-      "_months.BWXnGpdU.chunk.js",
+      "_useSyncedPref.CkUOc8pa.chunk.js",
       "_theme.DuCJPjK3.chunk.js",
-      "_DateSelect.D_MEmMoG.chunk.js",
-      "_useLocalPref.Cwo4jaE6.chunk.js"
+      "_DateSelect.1W7L8CMG.chunk.js",
+      "_useLocalPref.Iyv8XTCp.chunk.js"
     ],
     "dynamicImports": [
       "src/components/formula/FormulaEditor.tsx"
     ]
   },
-  "_bootstrapHyperFormula.BaXmIB0s.chunk.js": {
-    "file": "static/js/bootstrapHyperFormula.BaXmIB0s.chunk.js",
+  "_bootstrapHyperFormula.D81Ahely.chunk.js": {
+    "file": "static/js/bootstrapHyperFormula.D81Ahely.chunk.js",
     "name": "bootstrapHyperFormula",
     "imports": [
-      "_DateSelect.D_MEmMoG.chunk.js"
+      "_DateSelect.1W7L8CMG.chunk.js"
     ]
   },
   "_build-shims.CVsLiQAy.chunk.js": {
@@ -190,21 +209,52 @@
       "_rolldown-runtime.Co92CJQJ.chunk.js"
     ]
   },
-  "_columns.CdgO96kn.chunk.js": {
-    "file": "static/js/columns.CdgO96kn.chunk.js",
+  "_columns.CcTVBCFV.chunk.js": {
+    "file": "static/js/columns.CcTVBCFV.chunk.js",
     "name": "columns",
     "imports": [
       "_rolldown-runtime.Co92CJQJ.chunk.js",
       "_build-shims.CVsLiQAy.chunk.js",
-      "_months.BWXnGpdU.chunk.js",
+      "_useSyncedPref.CkUOc8pa.chunk.js",
       "_theme.DuCJPjK3.chunk.js",
-      "_Value.Cp6iFSn4.chunk.js",
-      "_useLocalPref.Cwo4jaE6.chunk.js"
+      "_Value.DBkRhjKA.chunk.js",
+      "_useLocalPref.Iyv8XTCp.chunk.js"
     ]
   },
-  "_months.BWXnGpdU.chunk.js": {
-    "file": "static/js/months.BWXnGpdU.chunk.js",
-    "name": "months",
+  "_definitions.W6WNFsFV.chunk.js": {
+    "file": "static/js/definitions.W6WNFsFV.chunk.js",
+    "name": "definitions"
+  },
+  "_dist.GKYEOKKx.chunk.js": {
+    "file": "static/js/dist.GKYEOKKx.chunk.js",
+    "name": "dist",
+    "imports": [
+      "_build-shims.CVsLiQAy.chunk.js"
+    ]
+  },
+  "_rolldown-runtime.Co92CJQJ.chunk.js": {
+    "file": "static/js/rolldown-runtime.Co92CJQJ.chunk.js",
+    "name": "rolldown-runtime"
+  },
+  "_theme.DuCJPjK3.chunk.js": {
+    "file": "static/js/theme.DuCJPjK3.chunk.js",
+    "name": "theme",
+    "imports": [
+      "_rolldown-runtime.Co92CJQJ.chunk.js"
+    ]
+  },
+  "_useLocalPref.Iyv8XTCp.chunk.js": {
+    "file": "static/js/useLocalPref.Iyv8XTCp.chunk.js",
+    "name": "useLocalPref",
+    "imports": [
+      "_rolldown-runtime.Co92CJQJ.chunk.js",
+      "_useSyncedPref.CkUOc8pa.chunk.js",
+      "_theme.DuCJPjK3.chunk.js"
+    ]
+  },
+  "_useSyncedPref.CkUOc8pa.chunk.js": {
+    "file": "static/js/useSyncedPref.CkUOc8pa.chunk.js",
+    "name": "useSyncedPref",
     "imports": [
       "_rolldown-runtime.Co92CJQJ.chunk.js",
       "_build-shims.CVsLiQAy.chunk.js",
@@ -263,47 +313,28 @@
       "locale/zh-Hant.json"
     ]
   },
-  "_rolldown-runtime.Co92CJQJ.chunk.js": {
-    "file": "static/js/rolldown-runtime.Co92CJQJ.chunk.js",
-    "name": "rolldown-runtime"
-  },
-  "_theme.DuCJPjK3.chunk.js": {
-    "file": "static/js/theme.DuCJPjK3.chunk.js",
-    "name": "theme",
-    "imports": [
-      "_rolldown-runtime.Co92CJQJ.chunk.js"
-    ]
-  },
-  "_useLocalPref.Cwo4jaE6.chunk.js": {
-    "file": "static/js/useLocalPref.Cwo4jaE6.chunk.js",
-    "name": "useLocalPref",
-    "imports": [
-      "_rolldown-runtime.Co92CJQJ.chunk.js",
-      "_months.BWXnGpdU.chunk.js",
-      "_theme.DuCJPjK3.chunk.js"
-    ]
-  },
   "index.html": {
-    "file": "static/js/index.sy-hEIVs.js",
+    "file": "static/js/index.C6KAjlSj.js",
     "name": "index",
     "src": "index.html",
     "isEntry": true,
     "imports": [
       "_rolldown-runtime.Co92CJQJ.chunk.js",
       "_build-shims.CVsLiQAy.chunk.js",
-      "_months.BWXnGpdU.chunk.js",
+      "_useSyncedPref.CkUOc8pa.chunk.js",
       "_theme.DuCJPjK3.chunk.js",
-      "_Value.Cp6iFSn4.chunk.js",
-      "_columns.CdgO96kn.chunk.js",
-      "_DateSelect.D_MEmMoG.chunk.js",
-      "_useLocalPref.Cwo4jaE6.chunk.js"
+      "_Value.DBkRhjKA.chunk.js",
+      "_columns.CcTVBCFV.chunk.js",
+      "_DateSelect.1W7L8CMG.chunk.js",
+      "_dist.GKYEOKKx.chunk.js",
+      "_useLocalPref.Iyv8XTCp.chunk.js",
+      "_TransactionEdit.jYYiJtnM.chunk.js"
     ],
     "dynamicImports": [
       "../../node_modules/absurd-sql/dist/indexeddb-main-thread-worker-e59fee74.js",
       "../../node_modules/workbox-window/build/workbox-window.prod.es5.mjs",
       "../../node_modules/@capacitor/app/dist/esm/web.js",
       "src/components/BackgroundImage.tsx",
-      "../../node_modules/@capacitor/haptics/dist/esm/web.js",
       "src/components/reports/ReportRouter.tsx",
       "src/components/responsive/narrow.ts",
       "src/components/responsive/wide.ts",
@@ -650,38 +681,39 @@
     ]
   },
   "src/components/formula/FormulaEditor.tsx": {
-    "file": "static/js/FormulaEditor.ld_Qp-mK.chunk.js",
+    "file": "static/js/FormulaEditor.CGLjfsRO.chunk.js",
     "name": "FormulaEditor",
     "src": "src/components/formula/FormulaEditor.tsx",
     "isDynamicEntry": true,
     "imports": [
       "_rolldown-runtime.Co92CJQJ.chunk.js",
-      "_months.BWXnGpdU.chunk.js",
+      "_useSyncedPref.CkUOc8pa.chunk.js",
       "_theme.DuCJPjK3.chunk.js",
-      "_DateSelect.D_MEmMoG.chunk.js",
+      "_DateSelect.1W7L8CMG.chunk.js",
       "index.html",
-      "_bootstrapHyperFormula.BaXmIB0s.chunk.js"
+      "_bootstrapHyperFormula.D81Ahely.chunk.js"
     ]
   },
   "src/components/reports/ReportRouter.tsx": {
-    "file": "static/js/ReportRouter.DeCsOBUi.chunk.js",
+    "file": "static/js/ReportRouter.DZNMT7rs.chunk.js",
     "name": "ReportRouter",
     "src": "src/components/reports/ReportRouter.tsx",
     "isDynamicEntry": true,
     "imports": [
       "_rolldown-runtime.Co92CJQJ.chunk.js",
       "_build-shims.CVsLiQAy.chunk.js",
-      "_months.BWXnGpdU.chunk.js",
+      "_useSyncedPref.CkUOc8pa.chunk.js",
       "_theme.DuCJPjK3.chunk.js",
-      "_Value.Cp6iFSn4.chunk.js",
-      "_columns.CdgO96kn.chunk.js",
-      "_DateSelect.D_MEmMoG.chunk.js",
-      "_useLocalPref.Cwo4jaE6.chunk.js",
-      "_TransactionList.Cg8Y4NnB.chunk.js",
+      "_Value.DBkRhjKA.chunk.js",
+      "_columns.CcTVBCFV.chunk.js",
+      "_DateSelect.1W7L8CMG.chunk.js",
+      "_useLocalPref.Iyv8XTCp.chunk.js",
+      "_TransactionEdit.jYYiJtnM.chunk.js",
+      "_TransactionList.DE0SAyG0.chunk.js",
       "index.html",
-      "_bootstrapHyperFormula.BaXmIB0s.chunk.js",
-      "_TransactionList.3oG6hJlq.chunk.js",
-      "_NotesTagFormatter.O7bkoYKt.chunk.js"
+      "_bootstrapHyperFormula.D81Ahely.chunk.js",
+      "_TransactionList.BaO-MeeR.chunk.js",
+      "_NotesTagFormatter.CPN8Nj7C.chunk.js"
     ],
     "dynamicImports": [
       "src/components/formula/FormulaEditor.tsx"
@@ -691,52 +723,53 @@
     ]
   },
   "src/components/responsive/narrow.ts": {
-    "file": "static/js/narrow.B2Lu5z-9.chunk.js",
+    "file": "static/js/narrow.BWz94OUc.chunk.js",
     "name": "narrow",
     "src": "src/components/responsive/narrow.ts",
     "isDynamicEntry": true,
     "imports": [
       "_rolldown-runtime.Co92CJQJ.chunk.js",
-      "_months.BWXnGpdU.chunk.js",
+      "_useSyncedPref.CkUOc8pa.chunk.js",
       "_theme.DuCJPjK3.chunk.js",
-      "_Value.Cp6iFSn4.chunk.js",
-      "_DateSelect.D_MEmMoG.chunk.js",
-      "_useLocalPref.Cwo4jaE6.chunk.js",
-      "_TransactionList.Cg8Y4NnB.chunk.js",
+      "_Value.DBkRhjKA.chunk.js",
+      "_DateSelect.1W7L8CMG.chunk.js",
+      "_useLocalPref.Iyv8XTCp.chunk.js",
+      "_TransactionEdit.jYYiJtnM.chunk.js",
+      "_TransactionList.DE0SAyG0.chunk.js",
       "index.html",
-      "_NotesTagFormatter.O7bkoYKt.chunk.js",
-      "_AutomaticSyncSettings.BpzSz4Ky.chunk.js"
+      "_NotesTagFormatter.CPN8Nj7C.chunk.js",
+      "_AutomaticSyncSettings.DeFw0esv.chunk.js"
     ]
   },
   "src/components/responsive/wide.ts": {
-    "file": "static/js/wide.BU6I0fqF.chunk.js",
+    "file": "static/js/wide.DdjYpMqJ.chunk.js",
     "name": "wide",
     "src": "src/components/responsive/wide.ts",
     "isDynamicEntry": true,
     "imports": [
       "_rolldown-runtime.Co92CJQJ.chunk.js",
-      "_months.BWXnGpdU.chunk.js",
+      "_useSyncedPref.CkUOc8pa.chunk.js",
       "_theme.DuCJPjK3.chunk.js",
-      "_Value.Cp6iFSn4.chunk.js",
-      "_columns.CdgO96kn.chunk.js",
-      "_DateSelect.D_MEmMoG.chunk.js",
-      "_useLocalPref.Cwo4jaE6.chunk.js",
+      "_Value.DBkRhjKA.chunk.js",
+      "_columns.CcTVBCFV.chunk.js",
+      "_DateSelect.1W7L8CMG.chunk.js",
+      "_useLocalPref.Iyv8XTCp.chunk.js",
       "index.html",
-      "_TransactionList.3oG6hJlq.chunk.js",
-      "_NotesTagFormatter.O7bkoYKt.chunk.js",
-      "_AutomaticSyncSettings.BpzSz4Ky.chunk.js"
+      "_TransactionList.BaO-MeeR.chunk.js",
+      "_NotesTagFormatter.CPN8Nj7C.chunk.js",
+      "_AutomaticSyncSettings.DeFw0esv.chunk.js"
     ]
   },
   "src/components/tour/TourHost.ts": {
-    "file": "static/js/TourHost.BAn1jE_q.chunk.js",
+    "file": "static/js/TourHost.C7fPUGTz.chunk.js",
     "name": "TourHost",
     "src": "src/components/tour/TourHost.ts",
     "isDynamicEntry": true,
     "imports": [
       "_rolldown-runtime.Co92CJQJ.chunk.js",
-      "_months.BWXnGpdU.chunk.js",
+      "_useSyncedPref.CkUOc8pa.chunk.js",
       "_theme.DuCJPjK3.chunk.js",
-      "_useLocalPref.Cwo4jaE6.chunk.js",
+      "_useLocalPref.Iyv8XTCp.chunk.js",
       "index.html"
     ]
   }
