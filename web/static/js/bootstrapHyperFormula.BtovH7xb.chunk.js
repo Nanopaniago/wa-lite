@@ -1,0 +1,2 @@
+import{S as HyperFormula,_ as CustomFunctionsPlugin,x as dictionary,y as customFunctionsTranslations}from"./DateSelect.C-o5Gt7J.chunk.js";function bootstrapHyperFormula(){HyperFormula.getRegisteredLanguagesCodes().includes(`enUS`)||HyperFormula.registerLanguage(`enUS`,dictionary),HyperFormula.registerFunctionPlugin(CustomFunctionsPlugin,customFunctionsTranslations)}export{bootstrapHyperFormula as t};
+//# sourceMappingURL=bootstrapHyperFormula.BtovH7xb.chunk.js.map
